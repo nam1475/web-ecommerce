@@ -1,0 +1,5 @@
+- Mã hóa mật khẩu = tinker:
+echo bcrypt('123')
+
+- Tạo dữ liệu tự động:
+User::factory()->count(5)->create()

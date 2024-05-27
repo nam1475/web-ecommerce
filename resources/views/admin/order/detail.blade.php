@@ -1,7 +1,7 @@
 @extends('admin.layout.main')
 
 @section('content')
-    <div class="customer mt-3">
+    <div class="customer mt-3 d-flex justify-content-around">
         <ul>
             <li>Tên khách hàng: <strong>{{ $customer->name }}</strong></li>
             <li>Số điện thoại: <strong>{{ $customer->phone }}</strong></li>
@@ -9,6 +9,31 @@
             <li>Email: <strong>{{ $customer->email }}</strong></li>
             <li>Ghi chú: <strong>{{ $customer->content }}</strong></li>
         </ul>
+
+        <form action="{{ route('order.update', $customer->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label>Trạng thái đơn hàng</label>
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" value="1" id="pending" type="radio" name="status" {{ $customer->status == 1 ? 'checked' : '' }}>
+                    <label for="pending" class="custom-control-label">Đang chờ duyệt</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" id="delivering" value="2" type="radio" name="status" {{ $customer->status == 2 ? 'checked' : '' }}>
+                    <label for="delivering" class="custom-control-label">Đang giao hàng</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" id="success" value="3" type="radio" name="status" {{ $customer->status == 3 ? 'checked' : '' }}>
+                    <label for="success" class="custom-control-label">Giao hàng thành công</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" id="cancel-order" value="4" type="radio" name="status" {{ $customer->status == 4 ? 'checked' : '' }}>
+                    <label for="cancel-order" class="custom-control-label">Hủy đơn</label>
+                </div>
+                <button type="submit" class="btn btn-primary ">Cập Nhật Trạng Thái</button>
+            </div>
+        </form>
     </div>
 
     <div class="carts">

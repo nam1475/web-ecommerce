@@ -8,9 +8,21 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Session;
 
 class OrderService{
-    public function getCustomers()
+    public function getCustomers($request)
     {
-        return Customer::paginate(10);
+        $customers = Customer::paginate(10);
+        if($search = $request->search){
+            $customers = Customer::where('id', '=', $search)
+                            ->orWhere('name', 'like', '%' . $search . '%')
+                            ->orWhere('address', 'like', '%' . $search . '%')
+                            ->orWhere('status', '=', $search)
+                            ->paginate(10);  
+        }
+        if($status = $request->input('filter-status')){
+            $customers = Customer::where('status', '=', $status)
+                            ->paginate(10);
+        }
+        return $customers;
     }
 
     public function getProductForOrder($customer)

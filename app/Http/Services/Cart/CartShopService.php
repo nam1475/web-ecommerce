@@ -101,7 +101,8 @@ class CartShopService{
                 'phone' => $request->input('phone'),
                 'address' => $request->input('address'),
                 'email' => $request->input('email'),
-                'content' => $request->input('content')
+                'content' => $request->input('content'),
+                'status' => 1,
             ]);
 
             $this->infoProductCart($carts, $customer->id);
@@ -143,7 +144,8 @@ class CartShopService{
                 'customer_id' => $customer_id,
                 'product_id' => $product->id,
                 'quantity'   => $carts[$product->id],
-                'price' => $product->price_sale != 0 ? $product->price_sale : $product->price
+                'price' => $product->price_sale != 0 ? $product->price_sale : $product->price,
+                'total' => $product->price_sale!= 0? $product->price_sale * $carts[$product->id] : $product->price * $carts[$product->id]
             ];
         }
 

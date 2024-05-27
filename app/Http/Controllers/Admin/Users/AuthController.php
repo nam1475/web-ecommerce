@@ -31,7 +31,7 @@ class AuthController extends Controller
 
             // $request->session()->put('adminName', auth()->user()->name);
             Session::put('adminName', auth()->user()->name);
-            return redirect()->route('admin');
+            return redirect()->route('dashboard');
         }
         
         Session::flash('error', 'Email hoặc Password không đúng');  

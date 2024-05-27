@@ -18,11 +18,18 @@ class OrderController extends Controller
         $this->order = $order;
     }
 
-    public function listCustomer()
+    public function listCustomer(Request $request)
     {
+        $statusPending = Customer::where('status', 1)->count();
+        $statusDelivering = Customer::where('status', 2)->count();
+        $statusSuccess = Customer::where('status', 3)->count();
+
         return view('admin.order.customer', [
-            'title' => 'Danh Sách Khách Hàng',
-            'customers' => $this->order->getCustomers()
+            'title' => 'Danh Sách Đặt Hàng',
+            'customers' => $this->order->getCustomers($request),
+            'statusPending' => $statusPending,
+            'statusDelivering' => $statusDelivering,
+            'statusSuccess' => $statusSuccess
         ]);
     }
 
@@ -35,6 +42,13 @@ class OrderController extends Controller
             'customer' => $customer,
             'orders' => $orders
         ]);
+    }
+
+    public function updateStatus(Request $request, $id){
+        $orderStatus = Customer::findOrFail($id);
+        $orderStatus->status = $request->input('status');
+        $orderStatus->save();   
+        return redirect()->route('customer.list');
     }
 
     public function delete($id)
