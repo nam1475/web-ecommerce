@@ -2,34 +2,75 @@
 
 @section('content')
 
-    <form action="">
-        <div class="input-group">
-        <input type="text" id="searchInput" name="search" class="form-control bg-light border-1 small" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <button class="btn btn-primary" id="searchStudent">
-            <i class="fas fa-search fa-sm"></i>      
-            </button>
-        </div>    
-        </div>
-    </form>
+    <div class="d-flex align-items-center justify-content-between my-2">
+        <div>
+            <a href="{{ route('customer.list') }}">
+                Tất cả
+            </a>
+            ({{ $customers->count() }}) |
 
-    <div class="my-2">
-        <a href="{{ route('customer.list') }}">
-            Tất cả
-        </a>
-        ({{ $customers->count() }}) |
-        <a href="?filter-status=1">
-            Đang chờ duyệt
-        </a>
-        ({{ $statusPending }}) |
-        <a href="?filter-status=2">
-            Đang giao hàng
-        </a>
-        ({{ $statusDelivering }}) |
-        <a href="?filter-status=3">
-            Giao hàng thành công
-        </a>
-        ({{ $statusSuccess }})
+            <a href="?filter-status=1">
+                Đang chờ duyệt
+            </a>
+            ({{ $statusPending }}) |
+
+            <a href="?filter-status=2">
+                Đang giao hàng
+            </a>
+            ({{ $statusDelivering }}) |
+
+            <a href="?filter-status=3">
+                Giao hàng thành công
+            </a>
+            ({{ $statusSuccess }}) |
+            
+            <a href="?filter-status=4">
+                Hủy đơn
+            </a>
+            ({{ $statusCancelOrder }})
+
+
+            {{-- <a href="{{ route('customer.list') }}">
+                Tất cả
+            </a>
+            @foreach ($status as $s)
+                @switch($s)
+                    @case(1)
+                        <a href="?filter-status={{ $s }}">
+                            Đang chờ duyệt
+                        </a>
+                        ()
+                        @break
+                    @case(2)
+                        <a href="?filter-status={{ $s }}">
+                            Đang giao hàng
+                        </a>
+                        @break
+                    @case(3)
+                        <a href="?filter-status={{ $s }}">
+                            Giao hàng thành công
+                        </a>
+                        @break
+                    @case(4)
+                        <a href="?filter-status={{ $s }}">
+                            Hủy đơn
+                        </a>
+                        @break
+                @endswitch
+            @endforeach --}}
+
+        </div>
+
+        <form action="">
+            <div class="input-group">
+            <input type="text" id="searchInput" name="search" class="form-control bg-light border-1 small" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="searchStudent">
+                <i class="fas fa-search fa-sm"></i>      
+                </button>
+            </div>    
+            </div>
+        </form>
     </div>
     <table class="table">
         <thead>

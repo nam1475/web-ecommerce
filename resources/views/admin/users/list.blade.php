@@ -33,27 +33,14 @@
                     <td>{{ $us->email }}</td>
                     <td>
                         @php
-                            $result = $us->roles()->pluck('role_id')->toArray();
-                            $userRoles = [];
-                            foreach ($result as $item) {
-                                $userRoles = explode(', ', $item);
-                            }
+                            $userRoles = App\Helpers\Helper::getID($us->roles(), 'role_id');
                         @endphp
                         @foreach($userRoles as $ur)
-                            @switch($ur)
-                                @case(1)
-                                    <span class="badge badge-primary">Admin</span>
-                                    @break
-                                @case(2)
-                                    <span class="badge badge-info">Guest</span>
-                                    @break
-                                @case(3)
-                                    <span class="badge badge-success">Developer</span>
-                                    @break
-                                @case(4)
-                                    <span class="badge badge-danger">Content</span>
-                                    @break                                    
-                            @endswitch
+                            @php
+                                /* Lấy ra từng role name thông qua id */
+                                $role = \App\Models\Role::find($ur);
+                            @endphp
+                            <span class="badge badge-primary">{{ $role->name }}</span>
                         @endforeach
                     </td>
                     <td>{{ $us->created_at }}</td>

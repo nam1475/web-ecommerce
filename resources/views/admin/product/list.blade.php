@@ -12,7 +12,7 @@
                 <th>Thumb</th>
                 <th>Active</th>
                 <th>Update</th>
-                <th style="width: 100px">Handle</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
 
@@ -30,8 +30,14 @@
                     <td>{!! \App\Helpers\Helper::active($product->active) !!}</td>
                     <td>{{ $product->updated_at }}</td>
                     <td class="btn-group">
-                        {!! \App\Helpers\Helper::editRow('product', $product) !!}
-                        {!! \App\Helpers\Helper::deleteRow('product', $product) !!}
+                        @can('edit-product')
+                            {!! \App\Helpers\Helper::editRow('product', $product) !!}
+                        @elsecan('delete-product')
+                            {!! \App\Helpers\Helper::deleteRow('product', $product) !!}
+                        @else
+                            {{-- Nếu ko thỏa mãn điều kiện nào thì để rỗng --}}
+                            &nbsp; 
+                        @endcan
                     </td>
                 </tr>
             @endforeach

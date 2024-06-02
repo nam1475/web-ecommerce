@@ -22,7 +22,46 @@
                         <input type="text" name="display_name" value="{{ $role->display_name }}" class="form-control" placeholder="Nhập mô tả">
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Chọn quyền</label>
+                    </div>
+                </div>
                 
+            </div>
+
+            <div class="row">
+                @foreach ($pmsParents as $pp)
+                <div class="card border-primary mb-3 col-md-12">
+                    <div class="card-header">
+                        <input class="form-check-input checkbox-parent" type="checkbox" id="{{ $pp->id }}">
+                        <label for="{{ $pp->id }}">
+                            {{ $pp->name }}
+                        </label>
+                    </div>
+                    <div class="row">
+                        {{-- Truy cập đến phương thức children trong model Permission, để duyệt qua từng bản ghi con 
+                            có parent_id là bản ghi cha hiện tại --}}
+                        @foreach($pp->children as $pc)
+                        <div class="card-body col-md-3">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-children" name="permission_id[]" type="checkbox" 
+                                        value="{{ $pc->id }}" id="{{ $pc->id }}" {{ in_array($pc->id, $rolePms) ? 'checked' : '' }}
+                                    >
+                                    <label class="form-check-label" for="{{ $pc->id }}">
+                                        {{ $pc->name }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
 

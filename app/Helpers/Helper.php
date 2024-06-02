@@ -5,29 +5,32 @@ use Illuminate\Support\Str;
 
 class Helper{
 
-    public static function menu($menus, $parentId = 0, $char = ''){
+    public static function menu($menus, $route, $parentId = 0, $char = ''){
         $html = '';
         foreach ($menus as $key => $menu) {
+            // dd($menus);
             if ($menu->parent_id == $parentId) {
                 $html .= '
                     <tr>
                         <td>'. $menu->id .'</td>
                         <td>'. $char . $menu->name .'</td>
+                        <td>'. $menu->description .'</td>
                         <td>'. $menu->parent_id .'</td>
                         <td>'. self::active($menu->active) .'</td>
-                        <td>'. $menu->updated_at .'</td>
+                        <td>'. $menu->created_at .'</td>
                         <td class="btn-group">
-                            '. self::editRow('menu', $menu) .'
-
-                            '. self::deleteRow('menu', $menu) .'
+                            '. self::editRow($route, $menu) .'
+                            '. self::deleteRow($route, $menu) .'
                         </td>
                     </tr>
                 ';
 
-                /* Loại bỏ mục menu vừa lặp qua, để tránh lặp lại khi đệ quy */
+                /* - $menus[$key]: Lấy ra value
+                - Loại bỏ mục menu cha vừa lặp qua, để tránh lặp lại menu cha khi đệ quy */
                 unset($menus[$key]);
+
                 /* Sử dụng đệ quy để tìm các menu con, gán cho dấu '--' để phân biệt: */ 
-                $html .= self::menu($menus, $menu->id, $char . '--');
+                $html .= self::menu($menus, $route, $menu->id, $char . '--');
             }
         }
         return $html;
@@ -87,7 +90,6 @@ class Helper{
                 $html .= '</li>';
 
             }
-
         }
         return $html;
     }
@@ -109,5 +111,13 @@ class Helper{
         return '<a href="/lien-he.html">Liên Hệ</a>';
     }
 
+    public static function getID($param, $column){
+        $result = $param->pluck($column)->toArray();
+        $arrayID = [];
+        foreach ($result as $item) {
+            $arrayID = explode(', ', $item);
+        }
+        return $arrayID;
+    }
 
 }

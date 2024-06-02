@@ -13,10 +13,14 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('permissions');
+        
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('display_name');
+            $table->text('description');
+            $table->integer('parent_id');
+            $table->integer('active');
             $table->timestamps();
         });
     }

@@ -6,10 +6,11 @@
             <tr>
                 <th style="width: 50px">ID</th>
                 <th>Name</th>
+                <th>Description</th>
                 <th>Parent ID</th>
                 <th>Active</th>
                 <th>Update</th>
-                <th style="width: 150px">Handle</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
 
@@ -18,7 +19,7 @@
                 - Dấu !!: dùng để đọc mã HTML nếu ko có trong phần dưới thì sẽ ra text 
                 - Dùng nnay để có thể tái sử dụng
             --}}
-            {!! App\Helpers\Helper::menu($menus) !!}
+            {!! App\Helpers\Helper::menu($menus, 'menu') !!}
         </tbody>
     </table>
     <div class="card-footer clearfix">

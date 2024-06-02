@@ -23,17 +23,31 @@ class OrderController extends Controller
         $statusPending = Customer::where('status', 1)->count();
         $statusDelivering = Customer::where('status', 2)->count();
         $statusSuccess = Customer::where('status', 3)->count();
+        $statusCancelOrder = Customer::where('status', 4)->count();
+
+        /* 
+        - distinct(): Lấy ra các giá trị duy nhất (Ko trùng lặp) 
+        - pluck(): Lấy ra mảng các giá trị trong cột đó 
+        - select(): Trả về 1 collection chứa các giá trị trong cột đó
+        */
+        // $status = Customer::pluck('status');
+        // $status = Customer::select('status')->get();
+        $status = Customer::select('status')->distinct()->orderBy('status')->pluck('status');
+
+        // dd($status);
 
         return view('admin.order.customer', [
             'title' => 'Danh Sách Đặt Hàng',
             'customers' => $this->order->getCustomers($request),
             'statusPending' => $statusPending,
             'statusDelivering' => $statusDelivering,
-            'statusSuccess' => $statusSuccess
+            'statusSuccess' => $statusSuccess,
+            'statusCancelOrder' => $statusCancelOrder,
+            'status' => $status
         ]);
     }
 
-    public function listOrder($id){
+    public function customerOrderList($id){
         $customer = Customer::findOrFail($id);
         $orders = $this->order->getProductForOrder($customer);
 

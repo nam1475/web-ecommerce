@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Services\Slider\SliderService;
+use App\Models\Slider;
 
 class SliderController extends Controller
 {
@@ -13,6 +14,7 @@ class SliderController extends Controller
     public function __construct(SliderService $slider)
     {
         $this->slider = $slider;
+        $this->authorizeResource(Slider::class);
     }
 
     public function list()

@@ -4,7 +4,7 @@
         @include('admin.layout.header')
     </head>
 
-    <body class="hold-transition sidebar-mini">
+    <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
             <!-- Navbar -->
             @include('admin.layout.navbar')
@@ -52,5 +52,7 @@
         </div>
         <!-- ./wrapper -->
         @include('admin.layout.footer')
+
+        
     </body>
 </html>

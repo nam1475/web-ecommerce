@@ -1,3 +1,22 @@
+
+{{-- @section('footer')
+    <script >
+        /* Active Item */
+        console.log(1);
+        document.addEventListener('DOMContentLoaded', function () {
+            var items = document.querySelectorAll('.nav-item');
+            items.forEach(function (item) {
+                item.addEventListener('click', function () {
+                    items.forEach(function(e){ 
+                        e.classList.remove('active'); 
+                    });
+                    item.classList.add('active');
+                });
+            });
+        });
+    </script>
+@endsection --}}
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link text-center">
@@ -14,7 +33,8 @@
                 <img src="{{ url('/template/admin_asset/profile-image/301648796_1164584951074067_594328778084010935_n (2).jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Session::get('adminName') }}</a>  
+                {{-- <a href="#" class="d-block">{{ Session::get('adminName') }}</a>   --}}
+                <a href="#" class="d-block">{{ auth()->user()->name }}</a>  
             </div>
         </div>
 
@@ -111,7 +131,6 @@
                                 <p>Danh Sách Slider</p>
                             </a>
                         </li>
-
                     </ul>
                 </li>
 
@@ -135,7 +154,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-cart-plus"></i>
+                        <i class="nav-icon fas fa-user"></i>
                         <p> User
                             <i class="right fas fa-angle-left"></i>
                         </p>
@@ -158,7 +177,7 @@
                 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-cart-plus"></i>
+                        <i class="nav-icon fas fa-briefcase"></i>
                         <p> Vai Trò
                             <i class="right fas fa-angle-left"></i>
                         </p>
@@ -174,6 +193,30 @@
                             <a href="{{ route('role.list') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh Sách Vai Trò</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-screwdriver-wrench"></i>
+                        <p> Phân Quyền
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('permission.add') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm Quyền</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('permission.list') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách Quyền</p>
                             </a>
                         </li>
                     </ul>

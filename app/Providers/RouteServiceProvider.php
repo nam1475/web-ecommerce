@@ -43,10 +43,43 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
+
+            /* namespace(): được sử dụng để chỉ định namespace cho các controller trong nhóm route này. 
+            $this->namespace: Các controller trong nhóm này sẽ nằm trong namespace App\Http\Controllers 
+            Laravel sẽ tải các route từ file
+            */
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+            
+            $this->adminAuthRoute();
+            Route::prefix('admin')->group(function () {
+                $this->adminRoute();
+            });
         });
+    }
+
+    public function routePath($routePath){
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path($routePath));
+    }
+
+    /* Tách các route ra file riêng và gọi đến thông qua base_path() */
+    public function adminRoute(){
+        $this->routePath('routes/admin/product.php');
+        $this->routePath('routes/admin/menu.php');
+        $this->routePath('routes/admin/slider.php');
+        $this->routePath('routes/admin/order.php');
+        $this->routePath('routes/admin/upload.php');
+        $this->routePath('routes/admin/dashboard.php');
+        $this->routePath('routes/admin/user.php');
+        $this->routePath('routes/admin/role.php');
+        $this->routePath('routes/admin/permission.php');
+    }
+
+    public function adminAuthRoute(){
+        $this->routePath('routes/admin/auth.php');
     }
 
     /**

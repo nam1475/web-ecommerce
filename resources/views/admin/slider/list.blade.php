@@ -10,7 +10,7 @@
                 <th>Thumb</th>
                 <th>Active</th>
                 <th>Update</th>
-                <th style="width: 100px">Handle</th>
+                <th>&nbsp;</th> 
             </tr>
         </thead>
 
@@ -27,8 +27,13 @@
                     <td>{!! \App\Helpers\Helper::active($slider->active) !!}</td>
                     <td>{{ $slider->updated_at }}</td>
                     <td class="btn-group">
-                        {!! \App\Helpers\Helper::editRow('slider', $slider) !!}
-                        {!! \App\Helpers\Helper::deleteRow('slider', $slider) !!}
+                        @can('edit-slider')
+                            {!! \App\Helpers\Helper::editRow('slider', $slider) !!}
+                        @elsecan('delete-slider')
+                            {!! \App\Helpers\Helper::deleteRow('slider', $slider) !!}
+                        @else
+                            &nbsp;
+                        @endcan
                     </td>
                 </tr>
             @endforeach

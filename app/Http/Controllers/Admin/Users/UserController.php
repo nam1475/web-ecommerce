@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+
 
 
 class UserController extends Controller
@@ -42,9 +44,10 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-    
+            
             /* attach(): Hàm insert các bản ghi vào bảng trung gian(user_role) trong quan hệ nhiều-nhiều */
             $user->roles()->attach(implode(', ', $request->role_id));
+
             // $user->roles()->createMany([
             //     'user_id' => $user->id,
             //     'role_id' => implode(', ', $roles),
@@ -72,12 +75,14 @@ class UserController extends Controller
         của user đó
         - toArray(): Phương thức trong Collection, dùng để chuyển thành array
         */
-        $result = $user->roles()->pluck('role_id')->toArray(); 
-        $userRoles = [];
-        foreach ($result as $item) {
-            /* Sử dụng explode để tách chuỗi thông qua dấu ',' của từng phần tử thành mảng */
-            $userRoles = explode(', ', $item);
-        }
+        // $result = $user->roles()->pluck('role_id')->toArray(); 
+        // $userRoles = [];
+        // foreach ($result as $item) {
+        //     /* Sử dụng explode để tách chuỗi thông qua dấu ',' của từng phần tử thành mảng */
+        //     $userRoles = explode(', ', $item);
+        // }
+
+        $userRoles = Helper::getID($user->roles(), 'role_id');  
 
         return view('admin.users.edit')->with([
             'user' => $user,
@@ -92,11 +97,9 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>  Hash::make($request->password),
         ]);
         /* sync(): Sẽ xóa hết dữ liệu cũ ở mọi cột trong bảng và thêm dữ liệu mới vào */
         $user->roles()->sync(implode(', ', $request->role_id));
-        // $user->save();
         Session::flash('success', 'Cập Nhật User Thành Công');
 
         return redirect()->route('user.list');

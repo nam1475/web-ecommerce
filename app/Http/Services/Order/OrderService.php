@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Session;
 class OrderService{
     public function getCustomers($request)
     {
+        /* Lấy ra 10 bản ghi mỗi trang */
         $customers = Customer::paginate(10);
+        // dd($customers);
         if($search = $request->search){
             $customers = Customer::where('id', '=', $search)
                             ->orWhere('name', 'like', '%' . $search . '%')
