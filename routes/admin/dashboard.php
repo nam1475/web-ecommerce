@@ -5,5 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 /* Dashboard */
 Route::controller(DashBoardController::class)->prefix('dashboard')->group(function () {
-    Route::get('/', 'index')->name('dashboard');
+    Route::get('/', 'index')->name('dashboard')->can('list-dashboard');
 });

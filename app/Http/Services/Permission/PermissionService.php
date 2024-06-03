@@ -17,17 +17,38 @@ class PermissionService{
         try{
             DB::beginTransaction();
 
+            // $pmsParent = "";
             $inputPmsParent = $request->input('parent_pms');
-            /* Tạo permission cha trước */
-            $pmsParent = Permission::create([
-                'name' => $inputPmsParent,
-                'description' => $inputPmsParent,
-                'parent_id' => 0,
-                'active' => $request->input('active'),
-            ]);
-                
+            /* - exist(): Trả về true nếu đã tồn tại, false nếu chưa 
+            Kiểm tra tên pms cha đã tồn tại trong db chưa */
+            $nameExist = Permission::where('name', '=', $inputPmsParent)->exists();
+            // dd($nameExist);
+
+            /* Nếu chưa tồn tại tên permission cha */
+            if(!$nameExist){
+                /* Tạo permission cha trước */
+                $pmsParent = Permission::create([
+                    'name' => $inputPmsParent,
+                    'description' => $inputPmsParent,
+                    'parent_id' => 0,
+                    'active' => $request->input('active'),
+                ]);
+                // dd($pmsParent);
+            }
+            /* Nếu đã tồn tại */
+            else{
+                /* first(): Trả về bản ghi đầu tiên trùng khớp, nếu ko có bản ghi nào trùng khớp sẽ trả
+                về null
+                - Đoạn lệnh dưới sẽ trả về 1 đối tượng của class Permission đại diện cho bản ghi đó. 
+                Đối tượng này sẽ chứa tất cả các thuộc tính của bản ghi, cũng như các phương thức của 
+                model Eloquent.
+                */
+                $pmsParent = Permission::where('name', '=', $inputPmsParent)->first();
+                // dd($pmsParent);
+            }
+
             /* Tạo permission con sau */
-            $action = $request->input('action');
+            $action = $request->input('action');    
             foreach($action as $item){
                 $joinName = $item . ' ' . $inputPmsParent;
                 Permission::create([
@@ -52,7 +73,7 @@ class PermissionService{
 
     public function update($request, $id){
         try {
-            /* Kiểm tra xem có bị trùng id với parent_id ko */
+            /* Kiểm tra xem id hiện tại có bị trùng với parent_id ko */
             if($id != $request->input('parent_id')){
                 $input = $request->all();
                 Permission::find($id)->update($input);
@@ -63,7 +84,6 @@ class PermissionService{
                 Session::flash('error', 'Ko Được Trùng Lặp Quyền');
                 return false;
             }
-            
         } catch (\Exception $err) {
             Session::flash('error', $err->getMessage());
             return false;

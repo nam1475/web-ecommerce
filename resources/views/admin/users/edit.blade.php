@@ -29,9 +29,9 @@
                         <label for="menu">Chọn vai trò</label>
                         @foreach($roles as $r)
                             <div class="form-check">
-                                {{-- in_array(): Kiểm tra xem mỗi role id có tồn tại trong mảng $userRoles ko --}}
+                                {{-- contains(): Kiểm tra id có trùng với id trong Collection hiện tại ko (Chỉ dùng cho Collection) --}}
                                 <input class="form-check-input" name="role_id[]" type="checkbox" value="{{ $r->id }}" id="{{ $r->id }}"
-                                    {{  in_array($r->id, $userRoles) ? 'checked' : ''}} >
+                                    {{ $userRoles->contains('id', $r->id) ? 'checked' : ''}} >
                                 <label class="form-check-label" for="{{ $r->id }}">
                                     {{ $r->name }}
                                 </label>

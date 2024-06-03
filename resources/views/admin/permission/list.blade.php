@@ -9,6 +9,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Parent ID</th>
+                <th>Key Code</th>
                 <th>Active</th>
                 <th>Created Date</th>
                 <th>&nbsp;</th>
@@ -30,6 +31,7 @@
                     </td>
                     <td>{{ $pm->description }}</td>
                     <td>{{ $pm->parent_id }}</td>
+                    <td>{{ $pm->key_code }}</td>
                     <td>{!! App\Helpers\Helper::active($pm->active) !!}</td>
                     <td>{{ $pm->created_at }}</td>
                     <td class="btn-group">

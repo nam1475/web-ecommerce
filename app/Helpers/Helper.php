@@ -112,6 +112,11 @@ class Helper{
     }
 
     public static function getID($param, $column){
+        /*  
+        - $user->roles()->pluck('role_id'): Sẽ trả về 1 Collection, lấy ra dữ liệu trong cột role_id 
+        của user đó
+        - toArray(): Phương thức trong Collection, dùng để chuyển thành array
+        */
         $result = $param->pluck($column)->toArray();
         $arrayID = [];
         foreach ($result as $item) {
@@ -119,5 +124,7 @@ class Helper{
         }
         return $arrayID;
     }
+
+
 
 }

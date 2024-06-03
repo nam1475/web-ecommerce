@@ -47,9 +47,8 @@ class RoleController extends Controller
 
     public function edit($id){
         $role = Role::find($id);
-        // $permissions = Permission::all();
         $pmsParents = RoleService::getPmsParent();
-        $rolePms = Helper::getID($role->permissions(), 'permission_id');  
+        $rolePms = $role->permissions; 
 
         return view('admin.role.edit')->with([
             'title' => 'Sửa Role',
@@ -70,6 +69,7 @@ class RoleController extends Controller
     public function delete($id){
         $role = Role::find($id);
         $role->delete();
+        Session::flash('success', 'Xóa Role Thành Công');
         return redirect()->route('role.list');
     }
 }

@@ -15,8 +15,12 @@
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
                     <ul class="main-menu">
-                        <li><a href="{{ route('shop.home') }}">Trang Chủ</a> </li>
-                            {!! $menusHtml !!}
+                        <li>
+                            <a href="{{ route('shop.home') }}">Trang Chủ</a> 
+                        </li>
+
+                        {!! $menusHtml !!}
+
                         <li>
                             <a href="contact.html">Liên Hệ</a>
                         </li>
@@ -30,19 +34,25 @@
                     </div>
                     
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                         data-notify="{{ !is_null(\Session::get('carts')) ? count(\Session::get('carts')) : 0 }}">
-                         <a href="{{ route('shop.cart.list') }}" style="color: initial">
-                            <i class="zmdi zmdi-shopping-cart"></i>
-                         </a>
+                        data-notify="{{ !is_null(\Session::get('carts')) ? count(\Session::get('carts')) : 0 }}">
+                        <a href="{{ route('shop.cart.list') }}" style="color: initial">
+                        <i class="zmdi zmdi-shopping-cart"></i>
+                        </a>
                     </div>
 
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                         data-notify="">
-                         <a href="" style="color: initial">
-                            <i class="zmdi zmdi-truck"></i>
-                         </a>
+                        data-notify="">
+                        <a href="" style="color: initial">
+                        <i class="zmdi zmdi-truck"></i>
+                        </a>
                     </div>
 
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart"
+                        data-notify="">
+                        <a href="" style="color: initial">
+                            <i class="zmdi zmdi-account"></i>
+                        </a>
+                    </div> 
                 </div>
             </nav>
         </div>
@@ -68,9 +78,9 @@
 
         <!-- Button show menu -->
         <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-				<span class="hamburger-box">
-					<span class="hamburger-inner"></span>
-				</span>
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
         </div>
     </div>
 

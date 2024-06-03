@@ -50,12 +50,12 @@
                 </div>
             </div> --}}
             
-
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">                        
                         <label>Chọn phân quyền cha</label>
-                        <select class="form-control" name="parent_pms">
+                        <select class="form-control parent-pms" name="parent_pms">
                             <option value=""></option>
                             @foreach(config('permission.table') as $item)
                                 <option value="{{ $item }}">{{ ucwords($item) }}</option>
@@ -65,18 +65,36 @@
                 </div>
             </div>
 
-            <label>Chọn action</label>
-            <div class="row">
-                @foreach(config('permission.action') as $ac)
-                    <div class="col-md-3">
+
+
+            <div class="card">
+                <div class="card-header">
+                    <label>Chọn action</label>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" name="action[]" type="checkbox" id="{{ $ac }}" value="{{ $ac }}">
-                                <label for="{{ $ac }}" class="custom-control-label">{{ ucwords($ac) }}</label>
+                                <input class="custom-control-input checkbox-all" type="checkbox" id="cb-all">
+                                <label for="cb-all" class="custom-control-label">Chọn tất cả</label>
                             </div>
                         </div>
                     </div>
-                @endforeach
+
+                    <div class="row">
+                        @foreach(config('permission.action') as $ac)
+                            <div class="col-md-3 module-action" id="{{ $ac }}-wrapper">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input checkbox-children" name="action[]" type="checkbox" id="{{ $ac }}" value="{{ $ac }}">
+                                        <label for="{{ $ac }}" class="custom-control-label">{{ ucwords($ac) }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -99,10 +117,13 @@
             <button type="submit" name="submit" class="btn btn-primary">Thêm Quyền</button>
         </div>
     </form>
+        
 @endsection
 
 @section('footer')
     <script>
         CKEDITOR.replace('content');
     </script>
+    <script src="{{ asset('template/admin_asset/js/permission/selected.js') }}"></script>
+    <script src="{{ asset('template/admin_asset/js/checkbox.js') }}"></script>
 @endsection

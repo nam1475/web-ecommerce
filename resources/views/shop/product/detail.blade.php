@@ -76,7 +76,7 @@
                         </h4>
 
                         <span class="mtext-106 cl2">
-							{{-- {!! \App\Helpers\Helper::price($product->price, $product->price_sale) !!} --}}
+							{!! \App\Helpers\Helper::price($product->price, $product->price_sale) !!}đ
 						</span>
 
                         <p class="stext-102 cl3 p-t-23">
@@ -328,7 +328,7 @@
         <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
 
             <span class="stext-107 cl6 p-lr-25">
-				Categories: {{ $product->menu->name }}
+				Danh mục: {{ $product->menu->name }}
 			</span>
         </div>
     </section>

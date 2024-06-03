@@ -4,7 +4,9 @@
             <!-- Block2 -->
             <div class="block2">
                 <div class="block2-pic hov-img0">
-                    <img src="{{ $product->thumb }}" alt="{{ $product->name }}">
+                    <a href="/san-pham/{{ $product->id }}-{{ Str::slug($product->name, '-') }}.html">
+                        <img src="{{ $product->thumb }}" alt="{{ $product->name }}">
+                    </a>
                 </div>
 
                 <div class="block2-txt flex-w flex-t p-t-14">
@@ -16,7 +18,7 @@
                         </a>
 
                         <span class="stext-105 cl3">
-							{!!  \App\Helpers\Helper::price($product->price, $product->price_sale)  !!}
+							{!!  \App\Helpers\Helper::price($product->price, $product->price_sale)  !!}đ
                             {{-- number_format: Ngăn cách số bằng dấu phẩy (VD: 280000 -> 280,000)--}}
                             {{-- {{ number_format($product->price) }}đ --}}
                         </span>

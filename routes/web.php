@@ -15,7 +15,7 @@ use App\Http\Controllers\Shop\ShopMainController;
 use App\Http\Controllers\Shop\ShopMenuController;
 use App\Http\Controllers\Shop\ShopProductController;
 use App\Http\Controllers\Shop\ShopCartController;
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +46,22 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::get('/clear-cache', function () {
+    $exitCode = Artisan::call('cache:clear');
+
+});
+
 
 /* Shop */
+// Route::controller(ShopAuthController::class)->group(function () {
+//     Route::get('/register', 'register')->name('shop.register');
+//     Route::post('/register', 'registerSave')->name('shop.register.save');
+
+//     Route::get('/login', 'index')->name('shop.login');
+//     Route::post('/login/store', 'store')->name('shop.login.store');
+//     Route::get('shop/logout', 'logout')->middleware('auth')->name('shop.logout');
+// });
+
 Route::controller(ShopMainController::class)->group(function () {
     Route::get('/home', 'index')->name('shop.home');
     Route::post('/services/load-product', 'loadProduct')->name('shop.loadProduct');

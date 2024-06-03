@@ -4,21 +4,6 @@
     <script src="/ckeditor/ckeditor.js"></script>
 @endsection
 
-@section('footer')
-    <script>
-        // $('.checkbox-parent').click(function(){
-        //     alert("Value: " + $(this).parents('.card').find('.checkbox_children').val());
-        //     $(this).parents('.card').find('.checkbox_children').prop('checked', $(this).prop('checked'));
-        //     $(this).parent().parent().parent('.card').find('.checkbox-children').prop('checked', $(this).prop('checked')); 
-        //     var values = [];
-    
-        //     $('#parentDiv input').each(function() {
-        //         values.push($(this).val());
-        //     });
-        // });
-    </script>
-@endsection
-
 @section('content')
     <form action="{{ route('role.store') }}" method="POST">
         @csrf
@@ -45,36 +30,47 @@
                         <label for="">Chọn quyền</label>
                     </div>
                 </div>
-                
+            </div>
+
+            <div class="row">
+                <div class="card border-primary mb-3 col-md-12">
+                    <div class="card-header">
+                        <input class="form-check-input checkbox-all" type="checkbox" id="cb-all">
+                        <label for="cb-all">
+                            Chọn tất cả
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 @foreach ($pmsParents as $pp)
-                <div class="card border-primary mb-3 col-md-12">
-                    <div class="card-header">
-                        <input class="form-check-input checkbox-parent" type="checkbox" id="{{ $pp->id }}">
-                        <label for="{{ $pp->id }}">
-                            {{ $pp->name }}
-                        </label>
-                    </div>
-                    <div class="row">
-                        {{-- Truy cập đến phương thức children trong model Permission, để duyệt qua từng bản ghi con 
-                            có parent_id là bản ghi cha hiện tại --}}
-                        @foreach($pp->children as $pc)
-                        <div class="card-body col-md-3">
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input checkbox-children" name="permission_id[]" type="checkbox" 
-                                        value="{{ $pc->id }}" id="{{ $pc->id }}">
-                                    <label class="form-check-label" for="{{ $pc->id }}">
-                                        {{ $pc->name }}
-                                    </label>
-                                </div>
-                            </div>
+                    <div class="card border-primary mb-3 col-md-12">
+                        <div class="card-header">
+                            <input class="form-check-input checkbox-parent" type="checkbox" id="{{ $pp->id }}">
+                            <label for="{{ $pp->id }}">
+                                {{ $pp->name }}
+                            </label>
                         </div>
-                        @endforeach
+                        
+                        <div class="row">
+                            {{-- Truy cập đến phương thức children trong model Permission, để duyệt qua từng bản ghi con 
+                                có parent_id là bản ghi cha hiện tại --}}
+                            @foreach($pp->children as $pc)
+                                <div class="card-body col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input checkbox-children" name="permission_id[]" type="checkbox" 
+                                                value="{{ $pc->id }}" id="{{ $pc->id }}">
+                                            <label class="form-check-label" for="{{ $pc->id }}">
+                                                {{ $pc->name }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
 
@@ -90,4 +86,5 @@
     <script>
         CKEDITOR.replace('content');
     </script>
+    <script src="{{ asset('template/admin_asset/js/checkbox.js') }}"></script>
 @endsection

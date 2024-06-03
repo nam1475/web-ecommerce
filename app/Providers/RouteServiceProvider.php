@@ -82,6 +82,12 @@ class RouteServiceProvider extends ServiceProvider
         $this->routePath('routes/admin/auth.php');
     }
 
+    // public function shopAuthRoute(){
+    //     $this->routePath('routes/admin/auth.php');
+    // }
+
+    
+
     /**
      * Configure the rate limiters for the application.
      *

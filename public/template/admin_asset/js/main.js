@@ -10,11 +10,14 @@ $("#upload").change(function(){
     yêu cầu HTTP. Bạn có thể sử dụng đối tượng FormData để tạo và xử lý dữ liệu biểu mẫu từ các yếu tố 
     HTML trong trang web. */
     const form = new FormData();
-    // console.log($(this)[0].files[0]);
     /* - $(this): Đối tượng vừa chọn (Trong TH này là trường input có name là 'file') 
     - files: Lấy ra các property của file 
     */
-    form.append('file', $(this)[0].files[0]);      
+   // console.log($(this)[0].files[0]);
+   form.append('file', $(this)[0].files[0]);   
+    
+    /* $.ajax(): Là một phương thức trong jQuery được sử dụng để thực hiện các yêu cầu HTTP bất đồng bộ (asynchronous)
+    từ trình duyệt web đến máy chủ và xử lý các phản hồi được trả về. */
     $.ajax({
         processData: false,
         contentType: false,
@@ -40,8 +43,7 @@ $("#upload").change(function(){
     });
 });
 
-/* $.ajax(): Là một phương thức trong jQuery được sử dụng để thực hiện các yêu cầu HTTP bất đồng bộ (asynchronous)
-từ trình duyệt web đến máy chủ và xử lý các phản hồi được trả về. */
+
 
 
 

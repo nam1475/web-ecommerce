@@ -33,14 +33,17 @@
                     <td>{{ $us->email }}</td>
                     <td>
                         @php
-                            $userRoles = App\Helpers\Helper::getID($us->roles(), 'role_id');
+                            // $userRoles = App\Helpers\Helper::getID($us->roles(), 'role_id');
+                            $userRoles = $us->roles; // Trả về mảng các bản ghi Model chứa role_id tương ứng
+                            // dd($userRoles);
                         @endphp
                         @foreach($userRoles as $ur)
-                            @php
+                            {{-- @php
                                 /* Lấy ra từng role name thông qua id */
                                 $role = \App\Models\Role::find($ur);
-                            @endphp
-                            <span class="badge badge-primary">{{ $role->name }}</span>
+                            @endphp --}}
+                            {{-- <span class="badge badge-primary">{{ $role->name }}</span> --}}
+                            <span class="badge badge-primary">{{ $ur->name }}</span>
                         @endforeach
                     </td>
                     <td>{{ $us->created_at }}</td>

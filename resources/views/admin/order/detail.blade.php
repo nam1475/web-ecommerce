@@ -61,14 +61,14 @@
                         </div>
                     </td>
                     <td class="column-2">{{ $order->product->name }}</td>
-                    <td class="column-3">{{ number_format($order->price, 0, '', '.') }}</td>
+                    <td class="column-3">{{ number_format($order->price, 0, '', '.') }}đ</td>
                     <td class="column-4">{{ $order->quantity }}</td>
-                    <td class="column-5">{{ number_format($price, 0, '', '.') }}</td>
+                    <td class="column-5">{{ number_format($price, 0, '', '.') }}đ</td>
                 </tr>
             @endforeach
                 <tr>
                     <td colspan="4" class="text-right">Tổng Tiền</td>
-                    <td>{{ number_format($total, 0, '', '.') }}</td>
+                    <td>{{ number_format($total, 0, '', '.') }}đ</td>
                 </tr>
             </tbody>
         </table>

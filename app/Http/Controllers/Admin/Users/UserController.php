@@ -18,7 +18,7 @@ class UserController extends Controller
 {
     public function list(){
         $users = User::paginate(10);
-        
+
         return view('admin.users.list')->with([
             'users' => $users,
             'title' => 'Danh Sách User'
@@ -46,7 +46,7 @@ class UserController extends Controller
             ]);
             
             /* attach(): Hàm insert các bản ghi vào bảng trung gian(user_role) trong quan hệ nhiều-nhiều */
-            $user->roles()->attach(implode(', ', $request->role_id));
+            $user->roles()->attach($request->role_id);
 
             // $user->roles()->createMany([
             //     'user_id' => $user->id,
@@ -70,19 +70,10 @@ class UserController extends Controller
     public function edit($id){
         $roles = Role::all(); // Trả về 1 collection bao gồm nhiều bản ghi
         $user = User::findOrFail($id);
-        /*  
-        - $user->roles()->pluck('role_id'): Sẽ trả về 1 Collection, lấy ra dữ liệu trong cột role_id 
-        của user đó
-        - toArray(): Phương thức trong Collection, dùng để chuyển thành array
-        */
-        // $result = $user->roles()->pluck('role_id')->toArray(); 
-        // $userRoles = [];
-        // foreach ($result as $item) {
-        //     /* Sử dụng explode để tách chuỗi thông qua dấu ',' của từng phần tử thành mảng */
-        //     $userRoles = explode(', ', $item);
-        // }
 
-        $userRoles = Helper::getID($user->roles(), 'role_id');  
+        /* Lấy ra dữ liệu cột role_id theo user_id */
+        $userRoles = $user->roles;
+        // dd($userRoles);
 
         return view('admin.users.edit')->with([
             'user' => $user,
@@ -99,7 +90,7 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
         /* sync(): Sẽ xóa hết dữ liệu cũ ở mọi cột trong bảng và thêm dữ liệu mới vào */
-        $user->roles()->sync(implode(', ', $request->role_id));
+        $user->roles()->sync($request->role_id);
         Session::flash('success', 'Cập Nhật User Thành Công');
 
         return redirect()->route('user.list');
@@ -108,6 +99,7 @@ class UserController extends Controller
     public function delete($id){
         $user = User::find($id);
         $user->delete();
+        Session::flash('success', 'Xóa User Thành Công');
         return redirect()->route('user.list');
     }
 }

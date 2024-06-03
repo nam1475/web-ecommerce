@@ -30,7 +30,17 @@
                         <label for="">Chọn quyền</label>
                     </div>
                 </div>
-                
+            </div>
+
+            <div class="row">
+                <div class="card border-primary mb-3 col-md-12">
+                    <div class="card-header">
+                        <input class="form-check-input checkbox-all" type="checkbox" id="cb-all">
+                        <label for="cb-all">
+                            Chọn tất cả
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -50,7 +60,7 @@
                             <div class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input checkbox-children" name="permission_id[]" type="checkbox" 
-                                        value="{{ $pc->id }}" id="{{ $pc->id }}" {{ in_array($pc->id, $rolePms) ? 'checked' : '' }}
+                                        value="{{ $pc->id }}" id="{{ $pc->id }}" {{ $rolePms->contains('id', $pc->id) ? 'checked' : '' }}
                                     >
                                     <label class="form-check-label" for="{{ $pc->id }}">
                                         {{ $pc->name }}
@@ -75,4 +85,5 @@
     <script>
         CKEDITOR.replace('content');
     </script>
+    <script src="{{ asset('template/admin_asset/js/checkbox.js') }}"></script>
 @endsection

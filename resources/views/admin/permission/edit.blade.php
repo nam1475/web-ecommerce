@@ -54,6 +54,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="menu">Key Code</label>
+                        <input type="text" name="key_code" value="{{ $permission->key_code }}" class="form-control" placeholder="Nhập key code">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">

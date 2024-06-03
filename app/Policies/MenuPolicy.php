@@ -28,10 +28,10 @@ class MenuPolicy
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public static function view(User $user)
     {
         /* $user: Trong TH này sẽ trả về bản ghi của user hiện tại */
-        return $user->checkPermissionAccess($user, 'list-menu');
+        return $user->checkPermissionAccess('list-menu');
     }
 
     /**
@@ -42,8 +42,7 @@ class MenuPolicy
      */
     public function create(User $user)
     {
-        return $user->checkPermissionAccess($user, 'add-menu');
-        
+        return $user->checkPermissionAccess('add-menu');
     }
 
     /**
@@ -55,7 +54,7 @@ class MenuPolicy
      */
     public function edit(User $user)
     {
-        return $user->checkPermissionAccess($user, 'edit-menu');
+        return $user->checkPermissionAccess('edit-menu');
     }
 
     /**
@@ -67,7 +66,7 @@ class MenuPolicy
      */
     public function delete(User $user)
     {
-        return $user->checkPermissionAccess($user, 'delete-menu');
+        return $user->checkPermissionAccess('delete-menu');
     }
 
     /**

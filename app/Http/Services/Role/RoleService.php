@@ -24,7 +24,7 @@ class RoleService{
             $role = Role::create($request->all());
             
             /* Thêm dữ liệu vào bảng permission_role với id role hiện tại và mảng các permission_id đã chọn */
-            $role->permissions()->attach(implode(', ', $request->input('permission_id')));
+            $role->permissions()->attach($request->input('permission_id'));
 
             DB::commit();
             Session::flash('success', 'Thêm Vai Trò Thành Công');
@@ -42,7 +42,7 @@ class RoleService{
             DB::beginTransaction();
             $role = Role::find($id);
             $role->update($request->all());
-            $role->permissions()->sync(implode(', ', $request->permission_id));
+            $role->permissions()->sync($request->permission_id);
             
             DB::commit();   
             Session::flash('success', 'Cập Nhật Role Thành Công');

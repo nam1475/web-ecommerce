@@ -49,24 +49,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id')->withTimestamps();
     }
 
-    public function checkPermissionAccess($user, $pmsCheck){
+    public function checkPermissionAccess($pmsCheck){
         /* Lấy ra id các roles của user hiện tại đang log in */
-        $userRoles = Helper::getID($user->roles(), 'role_id');
-        // dd($user->roles()->pluck('role_id'));
+        $userRoles = auth()->user()->roles;
+        // dd($userRoles);
         foreach($userRoles as $ur){
-            $role = Role::find($ur);
             /* Lấy ra id các permissions của roles thuộc user hiện tại */
-            $rolePms = Helper::getID($role->permissions(), 'permission_id'); 
-            // print_r($rolePms);
+            $rolePms = $ur->permissions; 
+            // dd($rolePms);
 
-            /* Duyệt qua từng id permission và lấy ra từng bản ghi */
-            foreach($rolePms as $rp){
-                $permission = Permission::find($rp);
-
-                /* So sánh 2 chuỗi ko phân biệt hoa thường, kiểm tra xem key code truyền vào có hợp lệ ko */
-                if(strcasecmp($permission->key_code, $pmsCheck) == 0){
-                    return true;
-                }
+            /* Kiểm tra $pmsCheck truyền vào có chứa key_code trong Collection hiện tại hay ko */
+            if($rolePms->contains('key_code', $pmsCheck)){
+                return true;
             }
         }
         return false;

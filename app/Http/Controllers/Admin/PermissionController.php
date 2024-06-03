@@ -17,7 +17,9 @@ class PermissionController extends Controller
     }
 
     public function list(){
-        $permissions = Permission::paginate(15);
+        /* Sắp xếp theo tên sau cùng của cột name */
+        $permissions = Permission::orderByRaw("SUBSTRING_INDEX(name, ' ', -1) asc")->paginate(15);
+        
         return view('admin.permission.list')->with([
             'permissions' => $permissions,
             'title' => 'Danh Sách Quyền'

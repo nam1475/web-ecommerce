@@ -12,6 +12,7 @@ return [
         'user',
         'role',
         'permission',
+        'dashboard',
     ],
     'action' => [
         'list',

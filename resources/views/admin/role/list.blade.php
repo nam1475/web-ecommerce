@@ -22,15 +22,11 @@
                     <td>{{ $r->display_name }}</td>
                     <td width="300px">
                         @php
-                            $rolePms = App\Helpers\Helper::getID($r->permissions(), 'permission_id');
+                            $rolePms = $r->permissions
                         @endphp
                         
                         @foreach($rolePms as $rp)
-                            @php
-                                /* Lấy ra từng permission name thông qua id */
-                                $permission = \App\Models\Permission::find($rp);
-                            @endphp
-                            <span class="badge badge-primary">{{ $permission->name }}</span>
+                            <span class="badge badge-primary">{{ $rp->name }}</span>
                         @endforeach
                     </td>
                     <td>{{ $r->created_at }}</td>
