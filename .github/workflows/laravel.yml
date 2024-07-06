@@ -14,6 +14,12 @@ jobs:
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: Config Clearing
+      run: php artisan config:clear
+      
+    - name: Cache Clearing
+      run: php artisan cache:clear
       
     - name: Update Composer dependencies
       run: composer update --prefer-dist --no-progress --no-suggest
