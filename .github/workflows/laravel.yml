@@ -29,9 +29,6 @@ jobs:
 
     # - name: composer update action
     #   uses: kawax/composer-update-action@develop
-
-    - name: Debug Composer
-      run: composer update --prefer-dist --no-progress --no-suggest -vvv
     
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
