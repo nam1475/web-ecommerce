@@ -4,6 +4,26 @@ jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
+
+    env:
+      DB_DATABASE: if0_36848372_web_ecommerce
+      DB_USERNAME: if0_36848372
+      DB_PASSWORD: Namphan181203
+      BROADCAST_DRIVER: log
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: Namphan181203
+          MYSQL_DATABASE: if0_36848372_web_ecommerce
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
     - uses: shivammathur/setup-php@v2
       with:
@@ -12,8 +32,8 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    # - name: Copy .env
-    #   run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     # - name: Config Clearing
     #   run: php artisan config:clear
@@ -21,8 +41,8 @@ jobs:
     # - name: Cache Clearing
     #   run: php artisan cache:clear
       
-    # - name: Update Composer dependencies
-    #   run: composer update --prefer-dist --no-progress --no-suggest
+    - name: Update Composer dependencies
+      run: composer update --prefer-dist --no-progress --no-suggest
 
     # - name: composer update action
     #   uses: kawax/composer-update-action@develop
