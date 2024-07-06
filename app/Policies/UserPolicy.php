@@ -27,7 +27,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function list(User $user)
     {
         return $user->checkPermissionAccess('list-user');
     }
@@ -38,7 +38,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function add(User $user)
     {
         return $user->checkPermissionAccess('add-user');
     }

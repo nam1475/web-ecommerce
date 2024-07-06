@@ -1,26 +1,20 @@
 @extends('admin.layout.main')
 
 @section('content')
-
-    {{-- <form action="">
-        <div class="input-group">
-        <input type="text" id="searchInput" name="search" class="form-control bg-light border-1 small" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <button class="btn btn-primary" id="searchStudent">
-            <i class="fas fa-search fa-sm"></i>      
-            </button>
-        </div>    
-        </div>
-    </form> --}}
-
+    @include('admin.search')
+    
+    @php
+        use App\Helpers\Helper;
+    @endphp
     <table class="table">
-        <thead>
+        <thead class="thead-light">
             <tr>
                 <th style="width: 50px">ID</th>
-                <th>Name</th>
+                <th>Tên</th>
                 <th>Email</th>
-                <th>Role</th>
-                <th>Created Date</th>
+                <th>Vai trò</th>
+                <th>Người tạo - Ngày tạo</th>
+                <th>Người cập nhật - Ngày cập nhật</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -33,7 +27,7 @@
                     <td>{{ $us->email }}</td>
                     <td>
                         @php
-                            // $userRoles = App\Helpers\Helper::getID($us->roles(), 'role_id');
+                            // $userRoles = Helper::getID($us->roles(), 'role_id');
                             $userRoles = $us->roles; // Trả về mảng các bản ghi Model chứa role_id tương ứng
                             // dd($userRoles);
                         @endphp
@@ -46,13 +40,18 @@
                             <span class="badge badge-primary">{{ $ur->name }}</span>
                         @endforeach
                     </td>
-                    <td>{{ $us->created_at }}</td>
+                    <td>
+                        {!! Helper::createdAtAndBy($us) !!}
+                    </td>
+                    <td>
+                        {!! Helper::updatedAtAndBy($us) !!}
+                    </td>
                     <td class="btn-group">
                         {{-- <a href=""  type="button" class="btn btn-info">
                             <i class="fa-solid fa-eye"></i>
                         </a> --}}
-                        {!! \App\Helpers\Helper::editRow('user', $us) !!}
-                        {!! \App\Helpers\Helper::deleteRow('user', $us) !!}
+                        {!! Helper::editRow('user', $us) !!}
+                        {!! Helper::deleteRow('user', $us) !!}
                     </td>
                 </tr>
             @endforeach

@@ -1,9 +1,5 @@
 @extends('admin.layout.main')
 
-@section('header')
-    <script src="/ckeditor/ckeditor.js"></script>
-@endsection
-
 @section('content')
     <form action="{{ route('permission.store') }}" method="POST">
         @csrf
@@ -76,8 +72,8 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input checkbox-all" type="checkbox" id="cb-all">
-                                <label for="cb-all" class="custom-control-label">Chọn tất cả</label>
+                                <input class="custom-control-input checkbox-all" name="action" type="checkbox" id="cb-all">
+                                <label for="cb-all" class="custom-control-label pointer">Chọn tất cả</label>
                             </div>
                         </div>
                     </div>
@@ -88,7 +84,7 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input checkbox-children" name="action[]" type="checkbox" id="{{ $ac }}" value="{{ $ac }}">
-                                        <label for="{{ $ac }}" class="custom-control-label">{{ ucwords($ac) }}</label>
+                                        <label for="{{ $ac }}" class="custom-control-label pointer">{{ ucwords($ac) }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -101,16 +97,15 @@
                 <div class="form-group">
                     <label>Kích Hoạt</label>
                     <div class="custom-control custom-radio">
-                        <input class="custom-control-input" value="1" type="radio" id="active" name="active">
-                        <label for="active" class="custom-control-label">Có</label>
+                        <input class="custom-control-input" value="1" type="radio" id="active" name="active" checked>
+                        <label for="active" class="custom-control-label pointer">Có</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" value="0" type="radio" id="no_active" name="active" >
-                        <label for="no_active" class="custom-control-label">Không</label>
+                        <label for="no_active" class="custom-control-label pointer">Không</label>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="card-footer">
@@ -118,12 +113,4 @@
         </div>
     </form>
         
-@endsection
-
-@section('footer')
-    <script>
-        CKEDITOR.replace('content');
-    </script>
-    <script src="{{ asset('template/admin_asset/js/permission/selected.js') }}"></script>
-    <script src="{{ asset('template/admin_asset/js/checkbox.js') }}"></script>
 @endsection

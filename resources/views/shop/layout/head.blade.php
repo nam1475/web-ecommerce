@@ -33,7 +33,23 @@
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="/template/shop/css/style.css">
 
+<link rel="stylesheet" type="text/css" href="/template/shop/css/custom.css">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<link rel="stylesheet" href="/template/admin_asset/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
+
+<link rel="stylesheet" href="{{ asset('template/admin_asset/plugins/select2/css/select2.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('template/admin_asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ion-rangeslider/css/ion.rangeSlider.min.css">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">

@@ -388,7 +388,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   top:0;
   left:100%;
   min-width: 178px;
-  max-width: 225px;
+  max-width: 300px;
   background-color: #fff;
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
@@ -409,7 +409,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .sub-menu li {
   position: relative;
   background-color: transparent;
-
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -417,7 +416,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .main-menu > li > .sub-menu {
-  top:100%;
+  top: 100%;
   left: 0;
 }
 
@@ -438,10 +437,10 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 /*---------------------------------------------*/
-.main-menu > li:hover > a {
+/* .main-menu > li:hover > a {
   text-decoration: none;
   color: #6c7ae0;
-}
+} */
 
 .main-menu > li:hover > .sub-menu {
   visibility: visible;
@@ -1201,7 +1200,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 
-
 /*//////////////////////////////////////////////////////////////////
 [ Slick1 ]*/
 .wrap-slick1 {
@@ -1905,7 +1903,7 @@ input.num-product::-webkit-inner-spin-button {
 [ Table Shopping Cart ]*/
 
 .wrap-table-shopping-cart {
-  overflow: auto;
+  /* overflow: auto; */
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
 }
@@ -1913,7 +1911,8 @@ input.num-product::-webkit-inner-spin-button {
 .table-shopping-cart {
   border-collapse: collapse;
   width: 100%;
-  min-width: 680px;
+  /* min-width: 680px; */
+  text-align: center;
 }
 
 .table-shopping-cart tr {
@@ -1928,6 +1927,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart .column-2 {
   width: 220px;
+  text-align: left;
   font-size: 15px;
 }
 
@@ -1938,13 +1938,15 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart .column-4 {
   width: 145px;
-  text-align: right;
 }
 
 .table-shopping-cart .column-5 {
   width: 172px;
-  padding-right: 50px;
-  text-align: right;
+  font-size: 16px;
+}
+
+.table-shopping-cart .column-6 {
+  width: 172px;
   font-size: 16px;
 }
 

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CreatedAndUpdatedBy;
 
 class Role extends Model
 {
-    use HasFactory;
+    use HasFactory, CreatedAndUpdatedBy;
 
     protected $table ='roles';
     protected $fillable = [

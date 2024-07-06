@@ -28,7 +28,7 @@ class MenuPolicy
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public static function view(User $user)
+    public static function list(User $user)
     {
         /* $user: Trong TH này sẽ trả về bản ghi của user hiện tại */
         return $user->checkPermissionAccess('list-menu');
@@ -40,7 +40,7 @@ class MenuPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function add(User $user)
     {
         return $user->checkPermissionAccess('add-menu');
     }

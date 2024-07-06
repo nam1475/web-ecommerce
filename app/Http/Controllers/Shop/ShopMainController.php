@@ -4,21 +4,20 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Services\Slider\SliderService;
-use App\Http\Services\Menu\MenuService;
-use App\Http\Services\Product\ProductShopService;
+use App\Http\Services\Admin\SliderService;
+use App\Http\Services\Admin\MenuService;
+use App\Http\Services\Shop\ShopProductService;
+use App\Traits\HelperTrait;
+use App\Models\Menu;
 
 class ShopMainController extends Controller
 {
     protected $slider;
-    protected $menu;
     protected $product;
     
-
-    public function __construct(SliderService $slider, MenuService $menu, ProductShopService $product)
+    public function __construct(SliderService $slider, ShopProductService $product)
     {
         $this->slider = $slider;
-        $this->menu = $menu;
         $this->product = $product;
     }
 
@@ -26,7 +25,7 @@ class ShopMainController extends Controller
         return view('shop.layout.home', [
             'title' => 'Shop bán quần áo',
             'sliders' => $this->slider->show(),
-            'menus' => $this->menu->show(),
+            'menus' => HelperTrait::getParents(Menu::class),
             'products' => $this->product->getProducts()
         ]); 
     }
@@ -34,10 +33,10 @@ class ShopMainController extends Controller
     public function loadProduct(Request $request)
     {
         $page = $request->input('page'); // Đặt gtri mặc định cho page = 0
-        $result = $this->product->getProducts($page);
+        $products = $this->product->getProducts($page);
         /* Đếm số lượng ptu trong 1 mảng hoặc collection */
-        if (count($result) != 0) {
-            $html = view('shop.product.list', ['products' => $result])->render();
+        if (count($products) != 0) {
+            $html = view('shop.product.list', ['products' => $products])->render();
 
             return response()->json([ 'html' => $html ]);
         }

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Users\UserController;
-
         
 /* User */
 Route::controller(UserController::class)->prefix('user')->group(function () {
@@ -12,4 +11,5 @@ Route::controller(UserController::class)->prefix('user')->group(function () {
     Route::get('/edit/{id}', 'edit')->name('user.edit')->can('edit-user');
     Route::put('/update/{id}', 'update')->name('user.update');
     Route::delete('/delete/{id}','delete')->name('user.delete')->can('delete-user');
+    Route::get('/profile','profile')->name('user.profile');
 });

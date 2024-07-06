@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Services\Upload\UploadService;
+use App\Http\Services\Admin\UploadService;
 
 class UploadController extends Controller
-{
+{   
     protected $upload;
 
     public function __construct(UploadService $upload)
@@ -18,7 +18,7 @@ class UploadController extends Controller
     public function store(Request $request){
         // if(isset($request->submit)){
             $urlFile = $this->upload->store($request);
-            if($urlFile){
+            if($urlFile != false){
                 return response()->json([
                     'error' => false,
                     'urlFile' => $urlFile

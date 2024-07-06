@@ -1,15 +1,20 @@
 @extends('admin.layout.main')
 
 @section('content')
-
+    @include('admin.search')
+    
+    @php
+        use App\Helpers\Helper;
+    @endphp
     <table class="table">
-        <thead>
+        <thead class="thead-light">
             <tr>
                 <th style="width: 50px">ID</th>
-                <th>Name</th>
-                <th>Display Name</th>
-                <th>Permission</th>
-                <th>Created Date</th>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th>Quyền</th>
+                <th>Người tạo - Ngày tạo</th>
+                <th>Người cập nhật - Ngày cập nhật</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -29,13 +34,15 @@
                             <span class="badge badge-primary">{{ $rp->name }}</span>
                         @endforeach
                     </td>
-                    <td>{{ $r->created_at }}</td>
+                    <td>
+                        {!! Helper::createdAtAndBy($r) !!}
+                    </td>
+                    <td>
+                        {!! Helper::updatedAtAndBy($r) !!}
+                    </td>
                     <td class="btn-group">
-                        {{-- <a href=""  type="button" class="btn btn-info">
-                            <i class="fa-solid fa-eye"></i>
-                        </a> --}}
-                        {!! \App\Helpers\Helper::editRow('role', $r) !!}
-                        {!! \App\Helpers\Helper::deleteRow('role', $r) !!}
+                        {!! Helper::editRow('role', $r) !!}
+                        {!! Helper::deleteRow('role', $r) !!}
                     </td>
                 </tr>
             @endforeach

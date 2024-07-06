@@ -1,115 +1,100 @@
+<style>
+    .dropdown-item:active{
+        background-color: #6c7ae0;
+    }
+</style>
+
 <header>
     @php $menusHtml = \App\Helpers\Helper::mainMenu($menus); @endphp
     {{-- {{ dd($menus) }} --}}
     <!-- Header desktop -->
-    <div class="container-menu-desktop">
-
+    <div class="container-menu-desktop">    
         <div class="wrap-menu-desktop">
             <nav class="limiter-menu-desktop container">
-
                 <!-- Logo desktop -->
-                <a href="#" class="logo">
+                <a href="{{ route('shop.home') }}" class="logo">
                     <img src="/template/shop/images/icons/logo-01.png" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
-                    <ul class="main-menu">
+                    <ul class="main-menu">  
                         <li>
-                            <a href="{{ route('shop.home') }}">Trang Chủ</a> 
+                            <a href="{{ route('shop.home') }}" id="home" class="nav-link">Trang Chủ</a> 
                         </li>
 
                         {!! $menusHtml !!}
-
-                        <li>
-                            <a href="contact.html">Liên Hệ</a>
-                        </li>
                     </ul>
                 </div>
 
                 <!-- Icon header -->
                 <div class="wrap-icon-header flex-w flex-r-m">
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                    {{-- <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                         <i class="zmdi zmdi-search"></i>
-                    </div>
+                    </div> --}}
                     
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
                         data-notify="{{ !is_null(\Session::get('carts')) ? count(\Session::get('carts')) : 0 }}">
                         <a href="{{ route('shop.cart.list') }}" style="color: initial">
-                        <i class="zmdi zmdi-shopping-cart"></i>
-                        </a>
-                    </div>
-
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                        data-notify="">
-                        <a href="" style="color: initial">
-                        <i class="zmdi zmdi-truck"></i>
+                            <i class="zmdi zmdi-shopping-cart"></i>
                         </a>
                     </div>
 
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart"
                         data-notify="">
-                        <a href="" style="color: initial">
-                            <i class="zmdi zmdi-account"></i>
-                        </a>
-                    </div> 
+                        <li class="nav-item dropdown">
+                            <a class="p-0" data-toggle="dropdown" style="color: initial" href="">
+                                <i class="zmdi zmdi-account"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if(!auth('customer')->check())
+                                    <a href="{{ route('shop.login') }}" class="dropdown-item">
+                                        <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+                                    </a>
+    
+                                    <div class="dropdown-divider"></div>
+    
+                                    <a href="{{ route('shop.register') }}" class="dropdown-item">
+                                        <i class="fa-solid fa-user-plus"></i> Đăng ký
+                                    </a>
+                                @else
+                                    <span class="dropdown-item dropdown-header">
+                                        <h6>
+                                            {{ auth('customer')->user()->name }}
+                                        </h6>
+                                    </span>
+                                    <a href="{{ route('shop.profile.info') }}" class="dropdown-item">
+                                        <i class="fas fa-gear mr-2"></i> Tài khoản
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <a href="{{ route('shop.logout') }}" class="dropdown-item" id="logout-customer">
+                                        <i class="fas fa-power-off mr-2"></i> Đăng xuất
+                                    </a>
+                                @endif
+                            </div>
+                        </li>
+                    </div>
+
                 </div>
             </nav>
         </div>
     </div>
 
-    <!-- Header Mobile -->
-    <div class="wrap-header-mobile">
-        <!-- Logo moblie -->
-        <div class="logo-mobile">
-            <a href="index.html"><img src="/template/shop/images/icons/logo-01.png" alt="IMG-LOGO"></a>
-        </div>
-
-        <!-- Icon header -->
-        <div class="wrap-icon-header flex-w flex-r-m m-r-15">
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
-                <i class="zmdi zmdi-search"></i>
-            </div>
-
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
-                <i class="zmdi zmdi-shopping-cart"></i>
-            </div>
-        </div>
-
-        <!-- Button show menu -->
-        <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-            <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-            </span>
-        </div>
-    </div>
-
-
-    <!-- Menu Mobile -->
-    <div class="menu-mobile">
-        <ul class="main-menu-m">
-            <li class="active-menu"><a href="/">Trang Chủ</a> </li>
-                {!! $menusHtml !!}
-            <li>
-                <a href="contact.html">Liên Hệ</a>
-            </li>
-
-        </ul>
-    </div>
-
     <!-- Modal Search -->
-    <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+    {{-- <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
         <div class="container-search-header">
             <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
                 <img src="/template/shop/images/icons/icon-close2.png" alt="CLOSE">
             </button>
 
-            <form class="wrap-search-header flex-w p-l-15">
+            <form action="{{ route('shop.menu.list', ['slug' => request()->input('search-products')]) }}" class="wrap-search-header flex-w p-l-15">
                 <button class="flex-c-m trans-04">
                     <i class="zmdi zmdi-search"></i>
                 </button>
-                <input class="plh3" type="text" name="search" placeholder="Search...">
+                <input class="plh3" type="text" name="search-products" placeholder="Tìm kiếm sản phẩm...">
             </form>
         </div>
-    </div>
+    </div> --}}
 </header>

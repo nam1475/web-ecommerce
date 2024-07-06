@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <label for="menu">Sắp Xếp</label>
-                <input type="number" name="sort_by" value="{{ $slider->sort_by }}" class="form-control" >
+                <input type="number" name="sort_by" value="{{ $slider->sort_by }}" class="form-control">
             </div>
 
             <div class="form-group">

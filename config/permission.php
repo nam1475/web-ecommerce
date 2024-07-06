@@ -13,6 +13,7 @@ return [
         'role',
         'permission',
         'dashboard',
+        'customer',
     ],
     'action' => [
         'list',

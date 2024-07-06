@@ -3,12 +3,12 @@
 @section('content')
     <div class="container p-t-80">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+            <a href="{{ route('shop.home') }}" class="stext-109 cl8 hov-cl1 trans-04">
                 Home
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
 
-            <a href="/danh-muc/{{ $product->menu->id }}-{{ Str::slug($product->menu->name) }}.html"
+            <a href="{{ route('shop.menu.list', $product->menu->slug) }}"
                class="stext-109 cl8 hov-cl1 trans-04">
                 {{ $product->menu->name }}
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
@@ -35,10 +35,12 @@
                                 </ul>
                             </div>
                             <div class="wrap-slick3-arrows flex-sb-m flex-w">
-                                <button class="arrow-slick3 prev-slick3 slick-arrow" style=""><i
-                                        class="fa fa-angle-left" aria-hidden="true"></i></button>
-                                <button class="arrow-slick3 next-slick3 slick-arrow" style=""><i
-                                        class="fa fa-angle-right" aria-hidden="true"></i></button>
+                                <button class="arrow-slick3 prev-slick3 slick-arrow" style="">
+                                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                </button>
+                                <button class="arrow-slick3 next-slick3 slick-arrow" style="">
+                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                </button>
                             </div>
 
                             <div class="slick3 gallery-lb slick-initialized slick-slider slick-dotted">
@@ -52,11 +54,6 @@
                                              aria-describedby="slick-slide-control10">
                                             <div class="wrap-pic-w pos-relative">
                                                 <img src="{{ $product->thumb }}" alt="IMG-PRODUCT">
-
-                                                <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                                   href="images/product-detail-01.jpg" tabindex="0">
-                                                    <i class="fa fa-expand"></i>
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +66,7 @@
                 <div class="col-md-6 col-lg-5 p-b-30">
                     <div class="p-r-50 p-t-5 p-lr-0-lg">
 
-                        @include('admin.alert')
+                        @include('admin.errors.error')
 
                         <h4 class="mtext-105 cl2 js-name-detail p-b-14">
                             {{ $title }}
@@ -79,29 +76,41 @@
 							{!! \App\Helpers\Helper::price($product->price, $product->price_sale) !!}đ
 						</span>
 
-                        <p class="stext-102 cl3 p-t-23">
-                            {{ $product->description }}
-                        </p>
-
-                        <!--  -->
                         <div class="p-t-33">
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-204 flex-w flex-m respon6-next">
-                                    <form action="{{ route('shop.cart.add') }}" method="POST">
+                            <form action="{{ route('shop.cart.add') }}" method="POST">
+                                @csrf
+                                <div class="flex-w flex-r-m p-b-10">
+                                    <div class="size-203 flex-c-m respon6">
+                                        Size
+                                    </div>
+
+                                    <div class="size-204 respon6-next">
+                                        <div class="rs1-select2 bor8 bg0">
+                                            <select class="js-select2" name="size_id">
+                                                <option value="">Chọn size</option>
+                                                @foreach ($productSizes as $ps)
+                                                    <option value="{{ $ps->id }}">{{ $ps->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="flex-w flex-r-m p-b-10">
+                                    <div class="size-204 flex-w flex-m respon6-next">
                                         @if ($product->price !== NULL)
-                                            <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                            <div class="wrap-num-product flex-w m-l-10 m-tb-10">
                                                 <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
                                                     <i class="fs-16 zmdi zmdi-minus"></i>
                                                 </div>
 
                                                 <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                       name="num_product" value="1">
+                                                    name="num_product" value="1">
 
                                                 <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                                     <i class="fs-16 zmdi zmdi-plus"></i>
                                                 </div>
                                             </div>
-
 
                                             <button type="submit"
                                                     class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 ">
@@ -109,14 +118,13 @@
                                             </button>
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         @endif
-                                        @csrf
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
                         <!--  -->
-                        <div class="flex-w flex-m p-l-100 p-t-40 respon7">
+                        {{-- <div class="flex-w flex-m p-l-100 p-t-40 respon7">
                             <div class="flex-m bor9 p-r-10 m-r-11">
                                 <a href="#"
                                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
@@ -139,7 +147,7 @@
                                data-tooltip="Google Plus">
                                 <i class="fa fa-google-plus"></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -154,8 +162,7 @@
                         </li>
 
                         <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional
-                                information</a>
+                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additionalinformation</a>
                         </li>
 
                         <li class="nav-item p-b-10">

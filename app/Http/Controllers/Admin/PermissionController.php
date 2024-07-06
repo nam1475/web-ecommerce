@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Permission\PermissionService;
+use App\Http\Services\Admin\PermissionService;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Admin\PermissionFormRequest;
+use App\Traits\HelperTrait;
 
 class PermissionController extends Controller
 {
@@ -16,32 +18,30 @@ class PermissionController extends Controller
         $this->pmsService = $pmsService;
     }
 
-    public function list(){
-        /* Sắp xếp theo tên sau cùng của cột name */
-        $permissions = Permission::orderByRaw("SUBSTRING_INDEX(name, ' ', -1) asc")->paginate(15);
-        
+    public function list(Request $request){        
         return view('admin.permission.list')->with([
-            'permissions' => $permissions,
-            'title' => 'Danh Sách Quyền'
+            'title' => 'Danh Sách Quyền',
+            'permissions' => HelperTrait::getAll($request, Permission::class),
+            'pmsParents' => HelperTrait::getParents(Permission::class)
         ]);
     }
 
     public function add(){
         return view('admin.permission.add')->with([
             'title' => 'Thêm Quyền Mới',
-            'permissions' => $this->pmsService->getParent()
+            'permissions' => HelperTrait::getParents(Permission::class)
         ]);
     }
 
-    public function store(Request $request){
+    public function store(PermissionFormRequest $request){
         // $input = $request->input('parent_id');
         // $name = $request->input('name');
         // if($input != 0){
         //     $name = '--' . $name;
         // }
-    
-        $createPermission = $this->pmsService->create($request);
-        if($createPermission){
+        
+        $result = $this->pmsService->create($request);
+        if($result){
             return redirect()->route('permission.list');
         }
         return redirect()->back();
@@ -53,7 +53,7 @@ class PermissionController extends Controller
         return view('admin.permission.edit')->with([
             'title' => 'Sửa Quyền',
             'permission' => $permission,
-            'permissions' => $this->pmsService->getParent()
+            'permissions' => HelperTrait::getParents(Permission::class)
         ]);
     }
 
@@ -66,8 +66,9 @@ class PermissionController extends Controller
     }
 
     public function delete($id){
-        $this->pmsService->delete($id);
-
-        return redirect()->back();
-    }
+        $result = $this->pmsService->delete($id);
+        if($result){
+            return redirect()->route('permission.list');
+        }
+        return redirect()->back();}
 }

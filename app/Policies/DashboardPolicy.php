@@ -28,7 +28,7 @@ class DashboardPolicy
      * @param  \App\Models\Dashboard  $dashboard
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function list(User $user)
     {
         return $user->checkPermissionAccess('list-dashboard');
     }

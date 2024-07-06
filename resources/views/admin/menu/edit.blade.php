@@ -8,7 +8,7 @@
     <form action="{{ route('menu.update', $menu->id) }}" method="POST">
         @csrf
         @method('PUT')
-
+        
         <div class="card-body">
             <div class="form-group">
                 <label for="menu">Tên Danh Mục</label>
@@ -18,13 +18,14 @@
             <div class="form-group">
                 <label>Danh Mục</label>
                 <select class="form-control" name="parent_id">
-                    <option value="0" {{ $menu->parent_id == 0 ? 'selected' : '' }}> Danh Mục Cha </option>
-                    @foreach($parentMenus as $pm)
+                    <option value="" {{ $menu->parent_id == null ? 'selected' : '' }}> Danh Mục Cha </option>
+                    {{-- @foreach($parentMenus as $pm)
                         <option value="{{ $pm->id }}"
                             {{ $menu->parent_id == $pm->id ? 'selected' : '' }}>
                             {{ $pm->name }}
                         </option>
-                    @endforeach
+                    @endforeach --}}
+                    {!! App\Helpers\Helper::recursiveSelectMenu($menus, $menu) !!}
                 </select>
             </div>
 
@@ -38,6 +39,21 @@
                 <textarea name="content" id="content" class="form-control">{{ $menu->content }}</textarea>
             </div>
 
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" name="slug" value="{{ $menu->slug }}" class="form-control"  placeholder="Nhập slug">
+            </div>
+
+            <div class="form-group">
+                <label for="menu">Ảnh Sản Phẩm</label>
+                <input type="file" class="form-control" id="upload">
+                <div id="image_show">
+                    <a href="{{ $menu->thumb }}" target="_blank">
+                        <img src="{{ $menu->thumb }}" width="100px">
+                    </a>
+                </div>
+                <input type="hidden" name="thumb" value="{{ $menu->thumb }}" id="thumb">
+            </div>
 
             <div class="form-group">
                 <label>Kích Hoạt</label>

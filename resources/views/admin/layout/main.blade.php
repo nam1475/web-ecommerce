@@ -19,7 +19,9 @@
                 <section class="content">
                     <div class="container-fluid">
 
-                        @include('admin.alert')
+                        {{-- @include('admin.alert') --}}
+                        
+                        @include('admin.errors.error')
 
                         <div class="row">
                             <!-- left column -->
@@ -29,7 +31,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title">{{ $title }}</h3>
                                     </div>
-
+                                    
                                     @yield('content')
 
                                 </div>

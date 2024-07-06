@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Services\Slider\SliderService;
+use App\Http\Services\Admin\SliderService;
 use App\Models\Slider;
+use App\Http\Requests\Admin\SliderFormRequest;
+use App\Traits\HelperTrait;
 
 class SliderController extends Controller
 {
@@ -14,14 +16,13 @@ class SliderController extends Controller
     public function __construct(SliderService $slider)
     {
         $this->slider = $slider;
-        $this->authorizeResource(Slider::class);
     }
 
-    public function list()
+    public function list(Request $request)
     {
         return view('admin.slider.list', [
             'title' => 'Danh Sách Slider',
-            'sliders' => $this->slider->getAll()
+            'sliders' => HelperTrait::getAll($request, Slider::class),
         ]);
     }
 
@@ -32,17 +33,13 @@ class SliderController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(SliderFormRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'thumb' => 'required',
-            'url'   => 'required'
-        ]);
-
-        $this->slider->add($request);
-
-        return redirect()->route('slider.list');
+        $result = $this->slider->add($request);
+        if ($result) {
+            return redirect()->route('slider.list');
+        }
+        return redirect()->back();
     }
 
 
@@ -56,12 +53,6 @@ class SliderController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'thumb' => 'required',
-            'url'   => 'required'
-        ]);
-
         $result = $this->slider->update($request, $id);
         if ($result) {
             return redirect()->route('slider.list');
@@ -70,22 +61,12 @@ class SliderController extends Controller
         return redirect()->back();
     }
 
-    // public function destroy(Request $request)
-    // {
-    //     $result = $this->slider->destroy($request);
-    //     if ($result) {
-    //         return response()->json([
-    //             'error' => false,
-    //             'message' => 'Xóa thành công Slider'
-    //         ]);
-    //     }
-
-    //     return response()->json([ 'error' => true ]);
-    // }
-
     public function delete($id)
     {
-        $this->slider->delete($id);
-        return redirect()->route('slider.list');
+        $result = $this->slider->delete($id);
+        if($result){
+            return redirect()->route('slider.list');
+        }
+        return redirect()->back();
     }
 }

@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /* Menu */
-Route::controller(MenuController::class)->prefix('menus')->group(function () {
+Route::controller(MenuController::class)->prefix('menu')->group(function () {
     Route::get('/list', 'list')->name('menu.list')->can('list-menu');
     Route::get('/add', 'add')->name('menu.add')->can('add-menu');
     Route::post('/store', 'store')->name('menu.store');

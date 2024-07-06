@@ -8,10 +8,7 @@
 
         <!-- Header -->
         @include('shop.layout.header')
-
-        <!-- Cart -->
-        {{-- @include('shop.layout.cart')     --}}
-
+        
         {{-- Content --}}
         @yield('content')
 

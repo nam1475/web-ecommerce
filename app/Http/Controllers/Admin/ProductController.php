@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Services\Product\ProductAdminService;
+use App\Http\Services\Admin\ProductAdminService;
 use App\Models\Product;
-use App\Http\Requests\Product\ProductFormRequest;
+use App\Http\Requests\Admin\ProductFormRequest;
+use App\Traits\HelperTrait;
+use App\Models\Menu;
 
 class ProductController extends Controller
 {
@@ -17,38 +19,49 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function list()
+    public function list(Request $request)
     {
         return view('admin.product.list', [
             'title' => 'Danh Sách Sản Phẩm',
-            'products' => $this->productService->getAll()
+            'products' => HelperTrait::getAll($request, Product::class),
+            'menuProducts' => $this->productService->getMenuProducts(),
+            'highestPrice' => $this->productService->getHighestProductPrice(),
         ]);
+    }
+
+    public function filterQueryString(Request $request)
+    {
+        return HelperTrait::filterQueryString($request, 'product.list');
     }
 
     public function add()
-    {
+    {        
         return view('admin.product.add', [
             'title' => 'Thêm Sản Phẩm Mới',
-            'menus' => $this->productService->getMenu()
+            'menus' => HelperTrait::getMenus(),
+            'sizes' => $this->productService->getSizes()
         ]);
     }
-
 
     public function store(ProductFormRequest $request)
     {
         $request->validated();
-
-        $this->productService->add($request);
-
-        return redirect()->route('product.list');
+        
+        $result = $this->productService->add($request);
+        if($result){
+            return redirect()->route('product.list');
+        }
+        return redirect()->back();
     }
 
     public function edit($id)
     {
         return view('admin.product.edit', [
             'title' => 'Chỉnh Sửa Sản Phẩm',
-            'product' => $this->productService->edit($id),
-            'menus' => $this->productService->getMenu()
+            'product' => $this->productService->getProductById($id),
+            'menus' => HelperTrait::getMenus(),
+            'sizes' => $this->productService->getSizes(),
+            'productSizes' => $this->productService->getProductSizes('', $id)
         ]);
     }
 
@@ -64,7 +77,14 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-        $this->productService->delete($id);
-        return redirect()->route('product.list');
+        $result = $this->productService->delete($id);
+        if($result){
+            // return response()->json([
+            //     'error' => false,
+            // ]);
+            return redirect()->route('product.list');
+        }
+        return redirect()->back();
+        // return response()->json(['error' => true]);
     }
 }

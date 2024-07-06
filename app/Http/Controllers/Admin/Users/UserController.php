@@ -2,31 +2,25 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
-use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\User_Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
-
-
+use App\Http\Requests\Admin\UserFormRequest;
+use App\Http\Services\Admin\UserService;
+use App\Traits\HelperTrait;
 
 class UserController extends Controller
 {
-    public function list(){
-        $users = User::paginate(10);
-
+    public function list(Request $request){
         return view('admin.users.list')->with([
-            'users' => $users,
+            'users' => HelperTrait::getAll($request, User::class),
             'title' => 'Danh Sách User'
         ]);
     }
     
     public function add(){
-        $roles = Role::all();
+        $roles = UserService::getRoles();
         // dd($roles);
         return view('admin.users.add')->with([
             'title' => 'Thêm User',
@@ -34,41 +28,16 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        try {
-            /* Đảm bảo rằng tất cả các thao tác này đều thành công trước khi thực sự ghi nhận chúng 
-            vào cơ sở dữ liệu */
-            DB::beginTransaction();
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
-            
-            /* attach(): Hàm insert các bản ghi vào bảng trung gian(user_role) trong quan hệ nhiều-nhiều */
-            $user->roles()->attach($request->role_id);
-
-            // $user->roles()->createMany([
-            //     'user_id' => $user->id,
-            //     'role_id' => implode(', ', $roles),
-            // ]);
-    
-            // User_Role::create([
-            //     'user_id' => $user->id,
-            //     'role_id' => implode(', ', $roles), // Tách các ptu trong mảng -> chuỗi cách nhau bởi dấu ','    
-            // ]);
-            DB::commit();
-            Session::flash('success', 'Thêm User Thành Công');
+    public function store(UserFormRequest $request){
+        $result = UserService::add($request);
+        if($result){
             return redirect()->route('user.list');
-        } catch (\Exception $err) {
-            DB::rollBack();
-            Session::flash('error', $err->getMessage());
         }
-        
+        return redirect()->back();
     }
 
     public function edit($id){
-        $roles = Role::all(); // Trả về 1 collection bao gồm nhiều bản ghi
+        $roles = UserService::getRoles(); // Trả về 1 collection bao gồm nhiều bản ghi
         $user = User::findOrFail($id);
 
         /* Lấy ra dữ liệu cột role_id theo user_id */
@@ -76,8 +45,8 @@ class UserController extends Controller
         // dd($userRoles);
 
         return view('admin.users.edit')->with([
-            'user' => $user,
             'title' => 'Sửa User',
+            'user' => $user,
             'roles' => $roles,
             'userRoles' => $userRoles, 
         ]);
@@ -89,17 +58,38 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
         ]);
-        /* sync(): Sẽ xóa hết dữ liệu cũ ở mọi cột trong bảng và thêm dữ liệu mới vào */
-        $user->roles()->sync($request->role_id);
-        Session::flash('success', 'Cập Nhật User Thành Công');
 
-        return redirect()->route('user.list');
+        if(isset($request->role_id)){
+            /* sync(): Sẽ xóa hết dữ liệu cũ ở mọi cột trong bảng và thêm dữ liệu mới vào */
+            $user->roles()->sync($request->role_id);
+            Session::flash('success', 'Cập Nhật User Thành Công');
+            
+            return redirect()->route('user.list');
+        }
+        
+        /* Cập nhật profile */
+        Session::flash('success', 'Cập Nhật Profile Thành Công');
+        return redirect()->back();
     }
 
     public function delete($id){
-        $user = User::find($id);
-        $user->delete();
-        Session::flash('success', 'Xóa User Thành Công');
-        return redirect()->route('user.list');
+        $result = UserService::delete($id);
+        if($result){
+            return redirect()->route('user.list');
+        }
+        return redirect()->back();
     }
+
+    public function profile(){
+        $user = auth()->user();
+        $userRoles = $user->roles;
+        
+        return view('admin.users.profile', [
+            'title' => 'Thông Tin Cá Nhân',
+            'user' => $user,
+            'userRoles' => $userRoles,
+        ]);
+    }
+
+
 }

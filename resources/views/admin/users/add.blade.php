@@ -1,9 +1,5 @@
 @extends('admin.layout.main')
 
-@section('header')
-    <script src="/ckeditor/ckeditor.js"></script>
-@endsection
-
 @section('content')
     <form action="{{ route('user.store') }}" method="POST">
         @csrf
@@ -36,11 +32,9 @@
                     <div class="form-group">
                         <label for="menu">Chọn vai trò</label>
                         @foreach($roles as $r)
-                            <div class="form-check">
-                                <input class="form-check-input" name="role_id[]" type="checkbox" value="{{ $r->id }}" id="{{ $r->id }}">
-                                <label class="form-check-label" for="{{ $r->id }}">
-                                    {{ $r->name }}
-                                </label>
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input checkbox-children" name="role_id[]" type="checkbox" id="{{ $r->id }}" value="{{ $r->id }}">
+                                <label for="{{ $r->id }}" class="custom-control-label pointer">{{ $r->name }}</label>
                             </div>
                         @endforeach
                     </div>
@@ -65,11 +59,4 @@
             <button type="submit" name="submit" class="btn btn-primary">Thêm User</button>
         </div>
     </form>
-@endsection
-
-@section('footer')
-    <script>
-        CKEDITOR.replace('content');
-        // $('.select').select2();
-    </script>
 @endsection

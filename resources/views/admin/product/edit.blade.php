@@ -22,11 +22,14 @@
                         <label>Danh Mục</label>
                         <select class="form-control" name="menu_id">
                             <option value=""></option>
-                            @foreach($menus as $menu)
+                            {{-- @foreach($menus as $menu)
                                 <option value="{{ $menu->id }}" {{ $product->menu_id == $menu->id ? 'selected' : '' }}>
                                     {{ $menu->name }}
                                 </option>
-                            @endforeach
+                            @endforeach --}}
+                            
+                            {{-- {!! App\Helpers\Helper::recursiveSelectMenu($menus, $product->menu_id) !!} --}}
+                            {!! App\Helpers\Helper::recursiveSelectMenu($menus, $product) !!}
                         </select>
                     </div>
                 </div>
@@ -43,7 +46,38 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="menu">Giá Giảm</label>
-                        <input type="number" name="price_sale" value="{{ $product->price_sale }}"  class="form-control" >
+                        <input type="number" name="price_sale" value="{{ $product->price_sale }}" class="form-control" >
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <label>Chọn size</label>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input checkbox-all" type="checkbox" id="cb-all">
+                                <label for="cb-all" class="custom-control-label pointer">Chọn tất cả</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @foreach ($sizes as $s)                            
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input checkbox-children" name="size[]" type="checkbox" id="{{ $s->id }}" 
+                                    {{ $productSizes->contains('id', $s->id) ? 'checked' : '' }} value="{{ $s->id }}">
+                                    <label for="{{ $s->id }}" class="custom-control-label pointer">{{ $s->name }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -56,6 +90,11 @@
             <div class="form-group">
                 <label>Mô Tả Chi Tiết</label>
                 <textarea name="content" id="content" class="form-control">{{ $product->content }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" name="slug" value="{{ $product->slug }}"  class="form-control">
             </div>
 
             <div class="form-group">

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\SessionGuard;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -43,18 +44,27 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
-
             /* namespace(): được sử dụng để chỉ định namespace cho các controller trong nhóm route này. 
             $this->namespace: Các controller trong nhóm này sẽ nằm trong namespace App\Http\Controllers 
             Laravel sẽ tải các route từ file
             */
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
+            // Route::middleware('web')
+            //     ->namespace($this->namespace)
+            //     ->group(base_path('routes/web.php'));
             
+            /* Phải cần có thêm middleware 'web' nếu không xác thực(auth) mặc định sẽ không hoạt động khi session, 
+            cookie,...(Được đky ở trong Kernel) chưa được bắt đầu: */
             $this->adminAuthRoute();
-            Route::prefix('admin')->group(function () {
-                $this->adminRoute();
+            Route::middleware(['web', 'auth.user'])->group(function () {
+                Route::middleware(['session.guard:admin'])->prefix('admin')->group(function () {
+                    $this->adminRoute();
+                });
+            });
+
+            /* - Định nghĩa middleware session riêng cho từng trang admin và shop
+            - Khi logout ở 1 trong 2 trang sẽ ko ảnh hưởng session ở trang còn lại */
+            Route::middleware('session.guard:shop')->name('shop.')->group(function () {
+                $this->shopRoute();
             });
         });
     }
@@ -76,15 +86,22 @@ class RouteServiceProvider extends ServiceProvider
         $this->routePath('routes/admin/user.php');
         $this->routePath('routes/admin/role.php');
         $this->routePath('routes/admin/permission.php');
+        $this->routePath('routes/admin/customer.php');
+        $this->routePath('routes/admin/size.php');
     }
 
     public function adminAuthRoute(){
         $this->routePath('routes/admin/auth.php');
     }
 
-    // public function shopAuthRoute(){
-    //     $this->routePath('routes/admin/auth.php');
-    // }
+    public function shopRoute(){
+        $this->routePath('routes/shop/main.php');
+        $this->routePath('routes/shop/cart.php');
+        $this->routePath('routes/shop/menu.php');
+        $this->routePath('routes/shop/product.php');
+        $this->routePath('routes/shop/auth.php');
+        $this->routePath('routes/shop/customer.php');
+    }
 
     
 

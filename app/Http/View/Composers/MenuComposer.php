@@ -17,7 +17,7 @@ class MenuComposer{
 
     public function compose(View $view)
     {
-        $menus = Menu::select('id', 'name', 'parent_id')->where('active', '=', 1)->orderByDesc('id')->get();
+        $menus = Menu::where('active', '=', 1)->orderByDesc('id')->get();
         $view->with('menus', $menus); // Truyền menus đến view thông qua ViewServiceProvider
     }
 }

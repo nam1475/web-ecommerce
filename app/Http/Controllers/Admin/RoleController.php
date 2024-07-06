@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Services\Role\RoleService;
-use App\Models\Permission;
+use App\Http\Services\Admin\RoleService;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Admin\RoleFormRequest;
+use App\Traits\HelperTrait;
 
 class RoleController extends Controller
 {
-    public function list(){
+    public function list(Request $request){
         // if(Gate::allows('admin')){
         //     return redirect()->route('dashboard');
         // }
         // else{
         //     abort(403, 'You are not allowed to access this page');
         // }
-        $roles = Role::paginate(10);
         return view('admin.role.list')->with([
-            'roles' => $roles,
+            'roles' => HelperTrait::getAll($request, Role::class),
             'title' => 'Danh Sách Vai Trò'
         ]);
     }
@@ -37,9 +35,9 @@ class RoleController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $createRole = RoleService::create($request);
-        if($createRole){
+    public function store(RoleFormRequest $request){
+        $result = RoleService::create($request);
+        if($result){
             return redirect()->route('role.list');
         }
         return redirect()->back();   
@@ -67,9 +65,10 @@ class RoleController extends Controller
     }
 
     public function delete($id){
-        $role = Role::find($id);
-        $role->delete();
-        Session::flash('success', 'Xóa Role Thành Công');
-        return redirect()->route('role.list');
+        $result = RoleService::delete($id);
+        if($result){
+            return redirect()->route('role.list');
+        }
+        return redirect()->back();
     }
 }

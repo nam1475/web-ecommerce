@@ -64,7 +64,7 @@
 
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ number_format($totalRevenue) }}<sup style="font-size: 20px">đ</sup></h3>
+                        <h3>{{ number_format($totalRevenue, 0, ',', '.') }}<sup style="font-size: 20px">đ</sup></h3>
                         <p>Doanh thu</p>
                     </div>
                     <div class="icon">

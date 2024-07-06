@@ -1,9 +1,5 @@
 @extends('admin.layout.main')
 
-@section('header')
-    <script src="/ckeditor/ckeditor.js"></script>
-@endsection
-
 @section('content')
     <form action="{{ route('permission.update', $permission->id) }}" method="POST">
         @csrf
@@ -29,7 +25,7 @@
                     <div class="form-group">                        
                         <label>Loại quyền</label>
                         <select class="form-control" name="parent_id">
-                            <option value="0" {{ $permission->parent_id == 0 ? 'selected' : '' }}> Phân Quyền Cha </option>
+                            <option value="" {{ $permission->parent_id == "" ? 'selected' : '' }}> Phân Quyền Cha </option>
                             @foreach($permissions as $p)
                                 <option value="{{ $p->id }}" 
                                     {{ $permission->parent_id == $p->id ? 'selected' : '' }}>
@@ -69,10 +65,4 @@
             <button type="submit" class="btn btn-primary">Cập Nhật</button>
         </div>
     </form>
-@endsection
-
-@section('footer')
-    <script>
-        CKEDITOR.replace('content');
-    </script>
 @endsection

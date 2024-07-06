@@ -1,9 +1,5 @@
 @extends('admin.layout.main')
 
-@section('header')
-    <script src="/ckeditor/ckeditor.js"></script>
-@endsection
-
 @section('content')
     <form action="{{ route('user.update', $user->id) }}" method="POST">
         @csrf
@@ -28,11 +24,11 @@
                     <div class="form-group">
                         <label for="menu">Chọn vai trò</label>
                         @foreach($roles as $r)
-                            <div class="form-check">
+                            <div class="custom-control custom-checkbox">
                                 {{-- contains(): Kiểm tra id có trùng với id trong Collection hiện tại ko (Chỉ dùng cho Collection) --}}
-                                <input class="form-check-input" name="role_id[]" type="checkbox" value="{{ $r->id }}" id="{{ $r->id }}"
+                                <input class="custom-control-input" name="role_id[]" type="checkbox" value="{{ $r->id }}" id="{{ $r->id }}"
                                     {{ $userRoles->contains('id', $r->id) ? 'checked' : ''}} >
-                                <label class="form-check-label" for="{{ $r->id }}">
+                                <label class="custom-control-label pointer" for="{{ $r->id }}">
                                     {{ $r->name }}
                                 </label>
                             </div>
@@ -47,10 +43,4 @@
             <button type="submit" class="btn btn-primary">Cập Nhật</button>
         </div>
     </form>
-@endsection
-
-@section('footer')
-    <script>
-        CKEDITOR.replace('content');
-    </script>
 @endsection

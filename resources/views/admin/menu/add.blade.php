@@ -10,27 +10,32 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="menu">Tên Danh Mục</label>
-                <input type="text" name="name" class="form-control"  placeholder="Nhập tên danh mục">
+                <input type="text" name="name" class="form-control" value="{{ old('name') }}"  placeholder="Nhập tên danh mục">
             </div>
 
             <div class="form-group">
                 <label>Danh Mục</label>
                 <select class="form-control" name="parent_id">
-                    <option value="0"> Danh Mục Cha </option>
-                    @foreach($menus as $menu)
-                        <option value="{{ $menu->id }}">{{ $menu->name }}</option>
-                    @endforeach
+                    <option value="">Danh Mục Cha</option>
+                    {!! App\Helpers\Helper::recursiveSelectMenu($menus) !!}
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Mô Tả </label>
-                <textarea name="description" class="form-control"></textarea>
+                <textarea name="description" class="form-control">{{ old('description') }}</textarea>
             </div>
 
             <div class="form-group">
                 <label>Mô Tả Chi Tiết</label>
-                <textarea name="content" id="content" class="form-control"></textarea>
+                <textarea name="content" id="content" class="form-control">{{ old('content') }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="menu">Chọn ảnh danh mục</label>
+                <input type="file" class="form-control" name="file" id="upload">
+                <div id="image_show"></div>
+                <input type="hidden" name="thumb" id="thumb">
             </div>
 
             <div class="form-group">
@@ -44,7 +49,6 @@
                     <label for="no_active" class="custom-control-label">Không</label>
                 </div>
             </div>
-
         </div>
 
         <div class="card-footer">
