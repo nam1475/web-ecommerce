@@ -20,9 +20,6 @@ jobs:
 
     # - name: Cache Clearing
     #   run: php artisan cache:clear
-
-    - name: Package discover
-      run: php artisan package:discover --ansi
       
     - name: Update Composer dependencies
       run: composer update --prefer-dist --no-progress --no-suggest
