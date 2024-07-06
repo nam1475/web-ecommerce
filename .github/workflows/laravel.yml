@@ -12,14 +12,14 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v2.3.2
 
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+   
     - name: Update Composer dependencies
       run: composer update --prefer-dist --no-progress --no-suggest
 
     - name: Install Composer dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
-      
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
