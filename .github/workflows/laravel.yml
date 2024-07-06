@@ -12,6 +12,12 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v2.3.2
 
+    - name: Update Composer dependencies
+      run: composer update --prefer-dist --no-progress --no-suggest
+
+    - name: Install Composer dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+      
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       
@@ -28,6 +34,6 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: ftpupload.net
-        username: if0_36822626
-        password: Namphan03
+        username: if0_36848372
+        password: Namphan181203
         server-dir: /htdocs/ 
