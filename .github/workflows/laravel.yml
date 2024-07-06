@@ -21,8 +21,8 @@ jobs:
     # - name: Cache Clearing
     #   run: php artisan cache:clear
       
-    - name: Update Composer dependencies
-      run: composer update --prefer-dist --no-progress --no-suggest
+    # - name: Update Composer dependencies
+    #   run: composer update --prefer-dist --no-progress --no-suggest
 
     # - name: composer update action
     #   uses: kawax/composer-update-action@develop
