@@ -1,4 +1,5 @@
 - Mã hóa mật khẩu = tinker:
+php artisan tinker
 echo bcrypt('123')
 
 - Tạo dữ liệu tự động:
