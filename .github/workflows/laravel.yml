@@ -18,13 +18,13 @@ jobs:
     
     - name: Modify .env file
       run: |
-        sed -i "s/APP_KEY=.*/APP_KEY=base64:5zN9D5KNgvBRaLyIVqXiggoSPKQ/32hECxTjvjFptKQ=/" .env
-        sed -i "s/APP_URL=.*/APP_URL=http://web-ecommerce.free.nf" .env
-        sed -i "s/DB_HOST=.*/DB_HOST=sql105.infinityfree.com/" .env
-        sed -i "s/DB_PORT=.*/DB_PORT=3306/" .env
-        sed -i "s/DB_DATABASE=.*/DB_DATABASE=if0_36848372_web_ecommerce/" .env
-        sed -i "s/DB_USERNAME=.*/DB_USERNAME=if0_36848372/" .env
-        sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=Namphan181203/" .env
+        sed -i "s|APP_KEY=.*|APP_KEY=base64:5zN9D5KNgvBRaLyIVqXiggoSPKQ/32hECxTjvjFptKQ=|" .env
+        sed -i "s|APP_URL=.*|APP_URL=http://web-ecommerce.free.nf" .env
+        sed -i "s|DB_HOST=.*|DB_HOST=sql105.infinityfree.com|" .env
+        sed -i "s|DB_PORT=.*|DB_PORT=3306|" .env
+        sed -i "s|DB_DATABASE=.*|DB_DATABASE=if0_36848372_web_ecommerce|" .env
+        sed -i "s|DB_USERNAME=.*|DB_USERNAME=if0_36848372|" .env
+        sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=Namphan181203|" .env
     
 
     # - name: Config Clearing
