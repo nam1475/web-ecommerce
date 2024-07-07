@@ -14,8 +14,8 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    # - name: Copy .env
-    #   run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     # - name: Config Clearing
     #   run: php artisan config:clear
@@ -25,9 +25,6 @@ jobs:
       
     # - name: Update Composer dependencies
     #   run: composer update --prefer-dist --no-progress --no-suggest
-
-    # - name: composer update action
-    #   uses: kawax/composer-update-action@develop
     
     # - name: Install Dependencies
     #   run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
@@ -41,13 +38,7 @@ jobs:
     # - name: Install npm
     #   run: npm install
 
-    # - name: Sync storage/app/public and public/storage directories
-    #   run: |
-    #     git config --global user.name "github-actions"
-    #     git config --global user.email "github-actions@github.com"
-    #     git checkout -b main
-    #     mkdir -p public/storage
-    #     cp -r storage/app/public public/storage
+    # Chạy lệnh git add file_name --force để có thể upload các folder trong .gitignore
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
