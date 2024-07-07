@@ -55,7 +55,7 @@ jobs:
         server: ftpupload.net
         username: if0_36848372
         password: Namphan181203
-        server-dir: /htdocs/Laravel/
+        server-dir: /htdocs/
     
     # - name: Run tests
     #   run: php artisan test
