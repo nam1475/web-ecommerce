@@ -41,16 +41,13 @@ jobs:
     # - name: Install npm
     #   run: npm install
 
-    - name: Sync storage/app/public and public/storage directories
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git checkout -b main
-        mkdir -p public/storage
-        cp -r storage/app/public public/storage
-        git add storage/app/public public/storage --force
-        git commit -m "Add storage/app/public and public/storage directories for CI"
-        git push origin main
+    # - name: Sync storage/app/public and public/storage directories
+    #   run: |
+    #     git config --global user.name "github-actions"
+    #     git config --global user.email "github-actions@github.com"
+    #     git checkout -b main
+    #     mkdir -p public/storage
+    #     cp -r storage/app/public public/storage
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
