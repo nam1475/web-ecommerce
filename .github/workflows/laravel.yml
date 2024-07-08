@@ -53,6 +53,9 @@ jobs:
 
     # Chạy lệnh git add file_name --force để có thể upload các folder trong .gitignore
     
+    - name: Symbolic link
+      run: php artisan storage:link
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
