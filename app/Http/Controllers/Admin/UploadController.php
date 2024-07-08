@@ -16,20 +16,18 @@ class UploadController extends Controller
     }
 
     public function store(Request $request){
-        // if(isset($request->submit)){
-            $urlFile = $this->upload->store($request);
-            if($urlFile != false){
-                return response()->json([
-                    'error' => false,
-                    'urlFile' => $urlFile
-                ]);
-            }
-            else{
-                return response()->json([
-                    'error' => true,
-                    'messageError' => 'Upload ảnh ko thành công'
-                ]);                                 
-            }
-        // }
+        $urlFile = $this->upload->store($request);
+        if($urlFile != false){
+            return response()->json([
+                'error' => false,
+                'urlFile' => $urlFile
+            ]);
+        }
+        else{
+            return response()->json([
+                'error' => true,
+                'messageError' => 'Upload ảnh ko thành công'
+            ]);                                 
+        }
     }
 }
