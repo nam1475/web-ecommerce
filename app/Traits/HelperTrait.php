@@ -20,9 +20,12 @@ trait HelperTrait
 {
     public static function deleteFile($object){
         if(!empty($object->thumb)){
-            /* Thay thế string storage -> public để truy cập vào folder storage/public bên server */
-            $path = str_replace('storage', 'public', $object->thumb);
-            Storage::delete($path); // Xóa ảnh trong server và client
+            /* Thay thế string storage -> public để truy cập vào folder public/uploads-files bên server */
+            $storagePath = str_replace('storage', 'public', $object->thumb);
+            Storage::delete($storagePath); // Xóa ảnh trong server
+            // Xóa ảnh trong client 
+            $publicPath = public_path($object->thumb);
+            unlink($publicPath);
         }
     }
 

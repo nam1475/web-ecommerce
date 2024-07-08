@@ -8,7 +8,7 @@
     
     @section('filter')
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default"> 
-            <i class="fa-solid fa-filter"></i>Lọc   
+            <i class="fa-solid fa-filter"></i> Bộ lọc   
         </button>
 
         {{-- @if(!empty(request()->query()))
