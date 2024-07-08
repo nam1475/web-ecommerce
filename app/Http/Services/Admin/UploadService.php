@@ -12,7 +12,10 @@ class UploadService{
                 $inputFile = $request->file('file');
                 $generatedFileName = time() . "-" . $inputFile->getClientOriginalName();
                 $path = "uploads-files/";
-                /* storeAs(): Lưu tên file tự đặt, lưu file vào storage/app/public/uploads-files/ */
+                /* storeAs(): Lưu tên file tự đặt, lưu file vào storage/app/public/uploads-files/ 
+                - Khi lưu vào trong storage/app/public/uploads-files/ sẽ đồng thời lưu vào 
+                public/storage/uploads-files/ nhờ lệnh php artisan storage:link
+                */
                 $inputFile->storeAs("public/" . $path, $generatedFileName);   
                 /* Trả về đường dẫn public/storage/uploads-files/ để có thể truy cập ngoài 
                 trình duyệt */
