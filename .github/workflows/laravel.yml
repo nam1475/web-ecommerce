@@ -52,9 +52,9 @@ jobs:
     # - name: Symbolic link
     #   run: php artisan storage:link
 
-    - name: Fetch ftp-deploy-sync-state.json
-      run: |
-        ssh -o StrictHostKeyChecking=no user@ftpupload.net 'cat /path/to/ftp-deploy-sync-state.json' > ftp-deploy-sync-state.json
+    # - name: Fetch ftp-deploy-sync-state.json
+    #   run: |
+    #     ssh -o StrictHostKeyChecking=no if0_36848372@ftpupload.net 'cat /path/to/ftp-deploy-sync-state.json' > ftp-deploy-sync-state.json
 
     - name: Read and process ftp-deploy-sync-state.json
       run: |
