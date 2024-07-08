@@ -9,7 +9,10 @@
     </div>
 
     <div class="card-body w-50">
-        <form action="{{ route('shop.profile.info.update', auth('customer')->user()->id) }}" method="POST">
+        @php
+            $customer = auth('customer')->user();
+        @endphp
+        <form action="{{ route('shop.profile.info.update', $customer->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group row">
@@ -17,7 +20,7 @@
                     <label for="" class="col-form-label text-secondary">Họ tên</label>
                 </div>
                 <div class="col-md-6">
-                    <label for="" class="col-form-label">{{ auth('customer')->user()->name }}</label>
+                    <label for="" class="col-form-label">{{ $customer->name }}</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -25,7 +28,7 @@
                     <label for="" class="col-form-label text-secondary">SĐT</label>
                 </div>
                 <div class="col-md-6">
-                    <label for="" class="col-form-label">{{ auth('customer')->user()->phone }}</label>
+                    <label for="" class="col-form-label">{{ isset($customer->phone) ? $customer->phone : 'Chưa cập nhật!' }}</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -33,11 +36,11 @@
                     <label for="" class="col-form-label text-secondary">Địa chỉ</label>
                 </div>
                 <div class="col-md-6">
-                    <label for="" class="col-form-label">{{ auth('customer')->user()->address }}</label>
+                    <label for="" class="col-form-label">{{ isset($customer->address) ? $customer->address : 'Chưa cập nhật!' }}</label>
                 </div>
             </div>
             <div class="form-group row">
-                {!! \App\Helpers\Helper::update('shop.profile.info.update', auth('customer')->user()->id, 
+                {!! \App\Helpers\Helper::update('shop.profile.info.update', $customer->id, 
                     'Thay đổi thông tin cá nhân ', 'Chỉnh Sửa', 'Cập nhật') !!}
             </div>
         </form>
@@ -50,7 +53,7 @@
     </div>
 
     <div class="card-body w-50">
-        <form action="{{ route('shop.profile.password.update', auth('customer')->user()->id) }}" method="POST">
+        <form action="{{ route('shop.profile.password.update', $customer->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group row">
@@ -59,7 +62,7 @@
                 </div>
 
                 <div class="col-sm-4">
-                    <label for="inputEmail" class="col-form-label">{{ auth('customer')->user()->email }}</label>
+                    <label for="inputEmail" class="col-form-label">{{ $customer->email }}</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -74,7 +77,7 @@
                 {{-- <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Cập nhật</button>
                 </div> --}}
-                {!! \App\Helpers\Helper::update('shop.profile.password.update', auth('customer')->user()->id, 
+                {!! \App\Helpers\Helper::update('shop.profile.password.update', $customer->id, 
                     'Thay đổi mật khẩu', 'Chỉnh Sửa', 'Cập nhật') !!}
             </div>
         </form>

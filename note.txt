@@ -133,3 +133,5 @@ jobs:
         server-dir: /htdocs/ 
         
 -Deploy lên server
+
+-Sửa lại phần AuthServiceProvider

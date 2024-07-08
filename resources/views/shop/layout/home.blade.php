@@ -5,7 +5,6 @@
     <section class="section-slide">
         <div class="wrap-slick1">
             <div class="slick1">
-
                 @foreach($sliders as $slider)
                     <div class="item-slick1" style="background-image: url({{ $slider->thumb }});">
                         <div class="container h-full">
@@ -74,7 +73,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Product -->
     <section class="bg0 p-t-23 p-b-140">

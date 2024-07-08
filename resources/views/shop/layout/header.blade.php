@@ -13,7 +13,7 @@
             <nav class="limiter-menu-desktop container">
                 <!-- Logo desktop -->
                 <a href="{{ route('shop.home') }}" class="logo">
-                    <img src="/template/shop/images/icons/logo-01.png" alt="IMG-LOGO">
+                    <img src="{{ asset('template/shop/images/icons/cooltext461671874962170.png') }}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->

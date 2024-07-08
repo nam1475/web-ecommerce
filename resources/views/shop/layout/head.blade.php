@@ -43,10 +43,6 @@
 
 <link rel="stylesheet" href="/template/admin_asset/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
 
-<link rel="stylesheet" href="{{ asset('template/admin_asset/plugins/select2/css/select2.min.css') }}">
-
-<link rel="stylesheet" href="{{ asset('template/admin_asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-
 <!-- SweetAlert CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 

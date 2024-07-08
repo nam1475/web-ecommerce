@@ -17,7 +17,7 @@ class Helper{
                         <td>
                             '.$char . $menu->name.'
                         </td>
-                        <td>'. $menu->parent_id .'</td>
+                        <td>'. ($menu->parent()->exists() ? $menu->parent->name : '').'</td>
                         <td>'. $menu->description .'</td>
                         <td>
                             '.(isset($menu->thumb) ? '<a href='.$menu->thumb.' target="_blank"><img src='.$menu->thumb.' class="thumb-size-auto"></a> ' : '').'
@@ -47,6 +47,7 @@ class Helper{
                 /* Sử dụng đệ quy để tìm các menu con của menu cha, gán cho dấu '--' để phân biệt: */ 
                 if($menu->children()->exists()){
                     $html .= self::recursiveListMenu($menu->children, $route, $menu->id, $char . '--');    
+                    // dd($menu);
                 }
                 // $html .= self::recursiveListMenu($menus, $route, $menu->id, $char . '--');    
             // }
@@ -468,7 +469,7 @@ class Helper{
             if ($menu->parent_id == $parentId) {
                 $html .= '
                     <li>
-                        <a class="nav-link" href="/danh-muc/' . $menu->slug . '" id='.$menu->id.'>
+                        <a class="nav-link" href="'.route('shop.menu.list', $menu->slug).'" id='.$menu->id.'>
                             '. $menu->name .'
                         </a>    
                 ';

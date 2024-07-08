@@ -103,8 +103,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->routePath('routes/shop/customer.php');
     }
 
-    
-
     /**
      * Configure the rate limiters for the application.
      *

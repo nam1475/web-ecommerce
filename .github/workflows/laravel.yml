@@ -16,6 +16,9 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     
+    # sed: Đây là một công cụ dòng lệnh dùng để tìm kiếm và thay thế văn bản trong các file.
+    # -i: Chỉnh sửa file trực tiếp mà ko cần tạo một file tạm thời
+    # s - substitute: Thay thế các giá trị trong file
     - name: Modify .env file
       run: |
         sed -i "s|APP_KEY=.*|APP_KEY=base64:5zN9D5KNgvBRaLyIVqXiggoSPKQ/32hECxTjvjFptKQ=|" .env
