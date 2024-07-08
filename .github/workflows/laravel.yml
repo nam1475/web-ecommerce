@@ -52,13 +52,10 @@ jobs:
     # - name: Symbolic link
     #   run: php artisan storage:link
 
-    # - name: Fetch ftp-deploy-sync-state.json
-    #   run: |
-    #     ssh -o StrictHostKeyChecking=no if0_36848372@ftpupload.net 'cat /path/to/ftp-deploy-sync-state.json' > ftp-deploy-sync-state.json
-
-    - name: Read and process ftp-deploy-sync-state.json
+    - name: Resync hidden files
       run: |
-        cat ftp-deploy-sync-state.json
+        ssh -o StrictHostKeyChecking=no if0_36848372@ftpupload.net 'rm /path/to/ftp-deploy-sync-state.json'
+        git ftp push --syncroot ./ --state-file ./.github/ftp-deploy-sync-state.json
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
