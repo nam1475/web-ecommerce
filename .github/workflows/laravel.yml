@@ -31,9 +31,6 @@ jobs:
     
     # - name: Config Clearing
     #   run: php artisan config:clear
-    
-    - name: Remove vendor directory
-      run: rm -rf vendor
 
     - name: Update Composer dependencies
       run: composer update --prefer-dist --no-progress --no-suggest
