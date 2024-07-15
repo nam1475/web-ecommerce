@@ -85,7 +85,7 @@ return [
 
     'from' => [
         'address' => 'phanhainam20035@gmail.com',
-        'name' => 'Coza Store',
+        'name' => 'Fein Clothing',
     ],
 
     /*

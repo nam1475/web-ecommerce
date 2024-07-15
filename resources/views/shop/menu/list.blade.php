@@ -80,23 +80,7 @@
                         </div>
                     </form>
                 </div>
-
-                <!-- Filter -->
-                {{-- <div class="dis-none panel-filter w-full p-t-10">
-                    <form action="{{ route('shop.menu.filter', $slug) }}">
-                        <div class="wrap-filter bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">  
-
-                            {!! App\Helpers\Helper::filterProducts($menuProducts, $highestPrice, $menu) !!}
-
-                            <div class="row">
-                                <div class="col-sm-4 p-r-15 p-b-27">
-                                    <button type="submit" class="filter-link stext-106 trans-04">Áp dụng</button>
-                                    <a href="{{ request()->url() }}" class="filter-link stext-106 trans-04 ml-3">Xóa bộ lọc</a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div> --}}
+                
             </div>
             
             <div class="row">

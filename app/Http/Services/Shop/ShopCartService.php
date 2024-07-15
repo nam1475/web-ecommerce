@@ -155,7 +155,7 @@ class ShopCartService{
             $data = [
                 'title' => 'Order Success',
                 'email' => $customer->email,
-                'name' => 'Coza Store',
+                'name' => 'Fein Clothing',
                 'body' => 'see your order',
                 'route' => 'shop.profile.order'
             ];

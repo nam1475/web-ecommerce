@@ -37,8 +37,8 @@ class UserAuthService{
 
         try{
             $array = [
-                'name' => 'Admin Coza Store',
                 'title' => 'Forgot password email',
+                'name' => 'Admin Fein Clothing',
                 'email' => $request->email,
                 'body' => 'reset your password',
                 'route' => 'admin.user.reset.password',

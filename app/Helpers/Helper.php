@@ -7,50 +7,45 @@ use App\Models\Menu;
 
 class Helper{
 
-    public static function recursiveListMenu($menus, $route, $parentId = null, $char = ''){
+    public static function recursiveListMenu($menus, $route, $char = ''){
         $html = '';
         foreach ($menus as $key => $menu) {
-            // if ($menu->parent_id == $parentId) {
-                $html .= '
-                    <tr>
-                        <td>'. $menu->id .'</td>
-                        <td>
-                            '.$char . $menu->name.'
-                        </td>
-                        <td>'. ($menu->parent()->exists() ? $menu->parent->name : '').'</td>
-                        <td>'. $menu->description .'</td>
-                        <td>
-                            '.(isset($menu->thumb) ? '<a href='.$menu->thumb.' target="_blank"><img src='.$menu->thumb.' class="thumb-size-auto"></a> ' : '').'
-                        </td>
-                        <td>
-                            '. (isset($menu->key_code) ? $menu->key_code : '') .'
-                        </td>
-                        <td>
-                            '. (isset($menu->slug) ? $menu->slug : '') .'
-                        </td>
-                        <td>'. self::active($menu->active) .'</td>
-                        <td>'. self::createdAtAndBy($menu) .'</td>
-                        <td>'. self::updatedAtAndBy($menu) .'</td>
-                        <td class="btn-group">
-                            '. self::editRow($route, $menu) .'
-                            '. self::deleteRow($route, $menu) .'
-                        </td>
-                    </tr>
-                ';
+            $html .= '
+                <tr>
+                    <td>'. $menu->id .'</td>
+                    <td>
+                        '.$char . $menu->name.'
+                    </td>
+                    <td>'. ($menu->parent()->exists() ? $menu->parent->name : '').'</td>
+                    <td>'. $menu->description .'</td>
+                    <td>
+                        '.(isset($menu->thumb) ? '<a href='.$menu->thumb.' target="_blank"><img src='.$menu->thumb.' class="thumb-size-auto"></a> ' : '').'
+                    </td>
+                    <td>
+                        '. (isset($menu->key_code) ? $menu->key_code : '') .'
+                    </td>
+                    <td>
+                        '. (isset($menu->slug) ? $menu->slug : '') .'
+                    </td>
+                    <td>'. self::active($menu->active) .'</td>
+                    <td>'. self::createdAtAndBy($menu) .'</td>
+                    <td>'. self::updatedAtAndBy($menu) .'</td>
+                    <td class="btn-group">
+                        '. self::editRow($route, $menu) .'
+                        '. self::deleteRow($route, $menu) .'
+                    </td>
+                </tr>
+            ';
 
-                /* - $menus[$key]: Trong TH này lấy ra đối tượng(menu) hiện tại
-                - Loại bỏ mục menu vừa lặp qua, để tránh lặp lại menu đó khi đệ quy, dẫn tới chậm hiệu suất 
-                web */
-                unset($menus[$key]); 
-                // dd($menus);
+            /* - $menus[$key]: Trong TH này lấy ra đối tượng(menu) hiện tại
+            - Loại bỏ mục menu vừa lặp qua, để tránh lặp lại menu đó khi đệ quy, dẫn tới chậm hiệu suất 
+            web */
+            unset($menus[$key]); 
 
-                /* Sử dụng đệ quy để tìm các menu con của menu cha, gán cho dấu '--' để phân biệt: */ 
-                if($menu->children()->exists()){
-                    $html .= self::recursiveListMenu($menu->children, $route, $menu->id, $char . '--');    
-                    // dd($menu);
-                }
-                // $html .= self::recursiveListMenu($menus, $route, $menu->id, $char . '--');    
-            // }
+            /* Sử dụng đệ quy để tìm các menu con của menu cha, gán cho dấu '--' để phân biệt: */ 
+            if($menu->children()->exists()){
+                $html .= self::recursiveListMenu($menu->children, $route, $char . '--');    
+            }
         }
         return $html;
     }
@@ -135,99 +130,6 @@ class Helper{
                 $html .= self::recursiveSelectMenu($menus, $object, $menu->id, $char . '--');
             }
         }
-        return $html;
-    }
-
-    public static function filterProducts($menuProducts, $highestPrice, Menu $menu = null){
-        $html = '';
-        $html .= '
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="">Danh mục</label>
-                            <div class="select2-primary">
-                                <select class="select2" multiple="multiple" data-placeholder="---Chọn---" 
-                                    style="width: 100%;" name="menu[]" data-dropdown-css-class="select2-primary">
-        ';
-                                    /* Nếu $menuProducts->first() là một đối tượng của model Product */
-                                    if($menuProducts->first() instanceof Product){
-                                        foreach ($menuProducts as $mp){
-                                            $html .= '
-                                                <option value="'.$mp->menu->slug.'"  '.(!empty(request()->query('menu')) && in_array($mp->menu->slug, request()->query('menu')) ? 'selected' : '').'>
-                                                    '.$mp->menu->name.'
-                                                </option>
-                                            ';
-                                        }
-                                    }
-                                    else if($menuProducts->first() instanceof Menu && $menu->parent_id == null){
-                                        foreach ($menuProducts as $mp){
-                                            $html .= '
-                                                <option value="'.$mp->slug.'"  '.(!empty(request()->query('menu')) && in_array($mp->slug, request()->query('menu')) ? 'selected' : '').'>
-                                                    '.$mp->name.'
-                                                </option>
-                                            ';
-                                        }
-                                    }
-        $html .= '
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 pr-5">
-                        <div class="form-group">
-                            <label for="">Giá</label>
-                            <input id="price-min" type="hidden" name="price-min" value="'.(request()->query('price-min') ? request()->query('price-min') : '').'">
-                            <input id="price-max" type="hidden" name="price-max" value="'.(request()->query('price-max') ? request()->query('price-max') : '').'">
-                            <input type="hidden" id="highest-price" value="'.$highestPrice.'">
-                            <input id="range-price" type="text">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="">Sắp xếp</label>
-                            <div class="custom-control custom-radio">
-                                <input class="custom-control-input" name="sort-price" type="radio" 
-                                    value="asc" id="asc" checked>
-                                <label class="custom-control-label pointer" for="asc">
-                                    Giá thấp đến cao
-                                </label>
-                            </div>
-
-                            <div class="custom-control custom-radio">
-                                <input class="custom-control-input" name="sort-price" type="radio" 
-                                    value="desc" id="desc" '.(request()->query('sort-price') == 'desc' ? 'checked' : '').'>
-                                <label class="custom-control-label pointer" for="desc">
-                                    Giá cao đến thấp
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-        ';
-        if($menuProducts->first() instanceof Product){
-            $html .= '
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Ngày tạo:</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="far fa-calendar-alt"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control float-right" id="reservation" value="123">
-                                    <input type="hidden" name="start-date" id="start-date" value="'.(request()->query('start-date') ? request()->query('start-date') : '').'">
-                                    <input type="hidden" name="end-date" id="end-date" value="'.(request()->query('end-date') ? request()->query('end-date') : '').'">
-                                </div>
-                            </div>
-                        </div>
-            ';
-        }
-        $html .= '
-                </div>
-        ';
-        
         return $html;
     }
 

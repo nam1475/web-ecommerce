@@ -93,17 +93,4 @@ class pmsGateAndPolicy{
     }
 
 
-
-
-
-
-
-
-
-
-
-    
-        
-
-    
 }

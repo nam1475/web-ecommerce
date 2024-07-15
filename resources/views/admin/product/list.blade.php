@@ -65,7 +65,71 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            {!! Helper::filterProducts($menuProducts, $highestPrice) !!}
+                            {{-- {!! Helper::filterProducts($menuProducts, $highestPrice) !!} --}}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="">Danh mục</label>
+                                        <div class="select2-primary">
+                                            <select class="select2" multiple="multiple" data-placeholder="---Chọn---" 
+                                                style="width: 100%;" name="menu[]" data-dropdown-css-class="select2-primary">
+                                                @foreach ($menuProducts as $mp)
+                                                    <option value="{{ $mp->menu->slug }}"  {{ !empty(request()->query('menu')) && in_array($mp->menu->slug, request()->query('menu')) ? 'selected' : '' }}>
+                                                        {{ $mp->menu->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-sm-4 pr-5">
+                                    <div class="form-group">
+                                        <label for="">Giá</label>
+                                        <input id="price-min" type="hidden" name="price-min" value="{{ request()->query('price-min') ? request()->query('price-min') : '' }}">
+                                        <input id="price-max" type="hidden" name="price-max" value="{{ request()->query('price-max') ? request()->query('price-max') : '' }}">
+                                        <input type="hidden" id="highest-price" value="{{ $highestPrice }}">
+                                        <input id="range-price" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="">Sắp xếp</label>
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" name="sort-price" type="radio" 
+                                                value="asc" id="asc" checked>
+                                            <label class="custom-control-label pointer" for="asc">
+                                                Giá thấp đến cao
+                                            </label>
+                                        </div>
+            
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" name="sort-price" type="radio" 
+                                                value="desc" id="desc" {{ request()->query('sort-price') == 'desc' ? 'checked' : '' }}>
+                                            <label class="custom-control-label pointer" for="desc">
+                                                Giá cao đến thấp
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Ngày tạo:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control float-right" id="reservation" value="123">
+                                            <input type="hidden" name="start-date" id="start-date" value="{{ request()->query('start-date') ? request()->query('start-date') : '' }}">
+                                            <input type="hidden" name="end-date" id="end-date" value="{{ request()->query('end-date') ? request()->query('end-date') : '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="modal-footer justify-content-between">

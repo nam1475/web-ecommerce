@@ -28,7 +28,7 @@ class ShopAuthService{
 
             $data = [
                 'title' => 'Verify account',
-                'name' => 'Coza Store',
+                'name' => 'Fein Clothing',
                 'email' => $request->email,
                 'body' => 'verify your account',
                 'route' => 'shop.verify.account',
@@ -83,7 +83,7 @@ class ShopAuthService{
         
         try{
             $array = [
-                'name' => 'Coza Store',
+                'name' => 'Fein Clothing',
                 'title' => 'Forgot password email',
                 'email' => $request->email,
                 'body' => 'reset your password',
