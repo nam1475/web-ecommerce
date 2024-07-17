@@ -65,7 +65,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            {{-- {!! Helper::filterProducts($menuProducts, $highestPrice) !!} --}}
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">

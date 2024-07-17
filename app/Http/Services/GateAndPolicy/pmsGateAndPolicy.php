@@ -8,6 +8,8 @@ use App\Traits\HelperTrait;
 
 class pmsGateAndPolicy{
     public static function defineGates(){
+        /* Ko dùng được đoạn code ngắn hơn này do trong quá trình deploy lên server chưa có kết nối đến DB nên ko 
+        thể truy vấn bảng permissions */
         // $pmsParents = HelperTrait::getParents(Permission::class);
         // foreach ($pmsParents as $pp){
         //     foreach($pp->children as $pc){
@@ -31,6 +33,7 @@ class pmsGateAndPolicy{
         self::defineGateCustomer();
         self::defineGateOrder();
         self::defineGateSlider();
+        self::defineGateSize();
     }
 
     public static function defineGateMenu(){
@@ -91,6 +94,15 @@ class pmsGateAndPolicy{
         Gate::define('edit-slider', 'App\Policies\SliderPolicy@edit');
         Gate::define('delete-slider', 'App\Policies\SliderPolicy@delete');
     }
+    
+    public static function defineGateSize(){
+        Gate::define('list-size', 'App\Policies\SizePolicy@list');  
+        Gate::define('add-size', 'App\Policies\SizePolicy@add');
+        Gate::define('edit-size', 'App\Policies\SizePolicy@edit');
+        Gate::define('delete-size', 'App\Policies\SizePolicy@delete');
+    }
+
+
 
 
 }

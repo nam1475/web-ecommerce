@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 // Route::middleware('auth.user')->group(function () {
 //     Route::prefix('admin')->group(function () {
-
+        
 //     });
 // });
 

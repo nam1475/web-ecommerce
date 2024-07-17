@@ -14,6 +14,7 @@ return [
         'permission',
         'dashboard',
         'customer',
+        'size'
     ],
     'action' => [
         'list',

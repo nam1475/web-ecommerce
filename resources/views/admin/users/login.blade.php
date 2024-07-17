@@ -5,7 +5,7 @@
         <form action="{{ route("login.store") }}" method="post">
             @csrf
             <div class="input-group mb-3">
-                <input type="email" name="email" class="form-control" placeholder="Email">
+                <input type="email" name="email" class="form-control" placeholder="Email" value="phanhainam18122003@gmail.com">
                 <div class="input-group-append">    
                     <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
@@ -13,7 +13,7 @@
                 </div>  
             </div>
             <div class="input-group mb-3">
-                <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
+                <input type="password" name="password" class="form-control" placeholder="Mật khẩu" value="1">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-lock"></span>
