@@ -10,10 +10,12 @@ use App\Traits\HelperTrait;
 
 class CustomerController extends Controller
 {
+    use HelperTrait;
+
     public function list(Request $request){
         return view('admin.customer.list', [
             'title' => 'Danh sách khách hàng',
-            'customers' => HelperTrait::getAll($request, Customer::class),
+            'customers' => self::getAll($request, Customer::class),
         ]);
     }
 

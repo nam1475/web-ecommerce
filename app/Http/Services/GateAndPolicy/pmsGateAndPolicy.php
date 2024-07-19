@@ -7,10 +7,12 @@ use App\Models\Permission;
 use App\Traits\HelperTrait;
 
 class pmsGateAndPolicy{
+    use HelperTrait;
+
     public static function defineGates(){
         /* Ko dùng được đoạn code ngắn hơn này do trong quá trình deploy lên server chưa có kết nối đến DB nên ko 
         thể truy vấn bảng permissions */
-        // $pmsParents = HelperTrait::getParents(Permission::class);
+        // $pmsParents = self::getParents(Permission::class);
         // foreach ($pmsParents as $pp){
         //     foreach($pp->children as $pc){
         //         /* Viết hoa chữ cái đtien trong những pms cha (product->Product) */

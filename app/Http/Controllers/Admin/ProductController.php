@@ -12,6 +12,8 @@ use App\Models\Menu;
 
 class ProductController extends Controller
 {
+    use HelperTrait;
+
     protected $productService;
 
     public function __construct(ProductAdminService $productService)
@@ -23,22 +25,22 @@ class ProductController extends Controller
     {
         return view('admin.product.list', [
             'title' => 'Danh Sách Sản Phẩm',
-            'products' => HelperTrait::getAll($request, Product::class),
+            'products' => self::getAll($request, Product::class),
             'menuProducts' => $this->productService->getMenuProducts(),
             'highestPrice' => $this->productService->getHighestProductPrice(),
         ]);
     }
 
-    public function filterQueryString(Request $request)
+    public function filterEmptyQueryString(Request $request)
     {
-        return HelperTrait::filterQueryString($request, 'product.list');
+        return self::applyFilterEmptyQueryString($request, 'product.list');
     }
 
     public function add()
     {        
         return view('admin.product.add', [
             'title' => 'Thêm Sản Phẩm Mới',
-            'menus' => HelperTrait::getMenus(),
+            'menus' => self::getMenus(),
             'sizes' => $this->productService->getSizes()
         ]);
     }
@@ -59,12 +61,11 @@ class ProductController extends Controller
         return view('admin.product.edit', [
             'title' => 'Chỉnh Sửa Sản Phẩm',
             'product' => $this->productService->getProductById($id),
-            'menus' => HelperTrait::getMenus(),
+            'menus' => self::getMenus(),
             'sizes' => $this->productService->getSizes(),
             'productSizes' => $this->productService->getProductSizes('', $id)
         ]);
     }
-
 
     public function update(Request $request, $id)
     {

@@ -10,6 +10,8 @@ use App\Traits\HelperTrait;
 
 class ShopMenuController extends Controller
 {
+    use HelperTrait;
+
     protected $menuService;
     protected $productAdminService;
 
@@ -34,8 +36,8 @@ class ShopMenuController extends Controller
         ]);
     }
 
-    public function filterQueryString(Request $request, $slug)
+    public function filterEmptyQueryString(Request $request, $slug)
     {
-        return HelperTrait::filterQueryString($request, 'shop.menu.list',  $slug);
+        return self::applyFilterEmptyQueryString($request, 'shop.menu.list',  $slug);
     }
 }

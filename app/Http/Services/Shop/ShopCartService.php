@@ -13,6 +13,8 @@ use App\Traits\HelperTrait;
 use App\Models\Size;
 
 class ShopCartService{
+    use HelperTrait;
+
     public function addToCart($request){
         $qty = $request->input('num_product');
         $product_id = $request->input('product_id');
@@ -160,7 +162,7 @@ class ShopCartService{
                 'route' => 'shop.profile.order'
             ];
 
-            HelperTrait::sendMail($data);
+            self::sendMail($data);
             
             /* Xóa các value trong key carts khỏi session, trong TH này là xóa sản phẩm khỏi giỏ hàng */
             Session::forget('carts');

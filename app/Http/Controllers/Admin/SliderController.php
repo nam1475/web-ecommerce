@@ -11,6 +11,8 @@ use App\Traits\HelperTrait;
 
 class SliderController extends Controller
 {
+    use HelperTrait;
+
     protected $slider;
 
     public function __construct(SliderService $slider)
@@ -22,7 +24,7 @@ class SliderController extends Controller
     {
         return view('admin.slider.list', [
             'title' => 'Danh Sách Slider',
-            'sliders' => HelperTrait::getAll($request, Slider::class),
+            'sliders' => self::getAll($request, Slider::class),
         ]);
     }
 

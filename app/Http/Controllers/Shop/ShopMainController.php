@@ -12,6 +12,8 @@ use App\Models\Menu;
 
 class ShopMainController extends Controller
 {
+    use HelperTrait;
+
     protected $slider;
     protected $product;
     
@@ -25,7 +27,7 @@ class ShopMainController extends Controller
         return view('shop.layout.home', [
             'title' => 'Shop bán quần áo',
             'sliders' => $this->slider->show(),
-            'menus' => HelperTrait::getParents(Menu::class),
+            'menus' => self::getParents(Menu::class),
             'products' => $this->product->getProducts()
         ]); 
     }

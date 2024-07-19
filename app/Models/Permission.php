@@ -20,8 +20,6 @@ class Permission extends Model
         'key_code'
     ];
 
-    /* Quan hệ một nhiều giữa id và parent_id trong bảng permission */
-
     public function roles(){
         return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id')->withTimestamps();
     }

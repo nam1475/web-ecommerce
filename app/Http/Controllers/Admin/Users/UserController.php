@@ -12,9 +12,11 @@ use App\Traits\HelperTrait;
 
 class UserController extends Controller
 {
+    use HelperTrait;
+
     public function list(Request $request){
         return view('admin.users.list')->with([
-            'users' => HelperTrait::getAll($request, User::class),
+            'users' => self::getAll($request, User::class),
             'title' => 'Danh Sách User'
         ]);
     }

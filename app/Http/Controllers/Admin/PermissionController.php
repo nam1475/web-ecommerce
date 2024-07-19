@@ -12,6 +12,8 @@ use App\Traits\HelperTrait;
 
 class PermissionController extends Controller
 {
+    use HelperTrait;
+
     protected $pmsService;
 
     public function __construct(PermissionService $pmsService){
@@ -21,15 +23,15 @@ class PermissionController extends Controller
     public function list(Request $request){        
         return view('admin.permission.list')->with([
             'title' => 'Danh Sách Quyền',
-            'permissions' => HelperTrait::getAll($request, Permission::class),
-            'pmsParents' => HelperTrait::getParents(Permission::class)
+            'permissions' => self::getAll($request, Permission::class),
+            'pmsParents' => self::getParents(Permission::class)
         ]);
     }
 
     public function add(){
         return view('admin.permission.add')->with([
             'title' => 'Thêm Quyền Mới',
-            'permissions' => HelperTrait::getParents(Permission::class)
+            'permissions' => self::getParents(Permission::class)
         ]);
     }
 
@@ -53,7 +55,7 @@ class PermissionController extends Controller
         return view('admin.permission.edit')->with([
             'title' => 'Sửa Quyền',
             'permission' => $permission,
-            'permissions' => HelperTrait::getParents(Permission::class)
+            'permissions' => self::getParents(Permission::class)
         ]);
     }
 

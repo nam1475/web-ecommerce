@@ -52,23 +52,19 @@ class ShopCustomerController extends Controller
     }
 
     public function profileOrder(Request $request){
-        // $orders = Order::where('customer_id', auth('customer')->user()->id)->get();
-        // dd($orders);
         $orders = $this->customerService->getCustomerOrders($request);
 
         $orderProducts = collect();
+        /* Lấy ra thông tin các sản phẩm, đơn đặt hàng của khách hàng */
         foreach($orders as $od){
             $orderProducts = $orderProducts->push($od->orderProducts()->with('product', 'order')->get());
         }
         // dd($orderProducts);
-        
-        $status = Order::select('status')->distinct()->orderBy('status')->pluck('status');
 
         return view('shop.customer.order', [
             'title' => 'Order',     
             'orders' => $orders,
             'orderProducts' => $orderProducts,
-            'status' => $status
         ]);
     }
 

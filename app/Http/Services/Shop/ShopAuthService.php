@@ -14,6 +14,8 @@ use App\Http\Requests\Shop\ResetPasswordRequest;
 use Illuminate\Support\Str;
 
 class ShopAuthService{
+    use HelperTrait;
+
     public function register($request){
         $request->validated();
 
@@ -34,10 +36,10 @@ class ShopAuthService{
                 'route' => 'shop.verify.account',
                 'token' => $customer->remember_token,
             ];
-            HelperTrait::sendMail($data);
+            self::sendMail($data);
             Session::flash('success', 'Đã gửi một email để xác thực');
             DB::commit();
-
+            
         }catch(\Exception $e){
             DB::rollBack();
             Session::flash('error', $e->getMessage());
@@ -79,7 +81,7 @@ class ShopAuthService{
     }
 
     public function forgotPasswordAction($request){
-        HelperTrait::validateAuthPassword($request, 'customers', ForgotPasswordRequest::class);
+        self::validateAuthPassword($request, 'customers', ForgotPasswordRequest::class);
         
         try{
             $array = [
@@ -90,7 +92,7 @@ class ShopAuthService{
                 'route' => 'shop.reset.password',
             ];
 
-            HelperTrait::forgotPasswordAction(CustomerResetPassword::class, $array);
+            self::applyForgotPasswordAction(CustomerResetPassword::class, $array);
 
         }catch(\Exception $e){
             DB::rollBack();
@@ -101,7 +103,7 @@ class ShopAuthService{
     }
 
     public function resetPasswordAction($request, $token){
-        HelperTrait::validateAuthPassword($request, 'customers', ResetPasswordRequest::class);
+        self::validateAuthPassword($request, 'customers', ResetPasswordRequest::class);
         
         try{
             $data = [
@@ -111,7 +113,7 @@ class ShopAuthService{
                 'token' => $token,
                 'guardName' => 'customer',
             ];
-            $result = HelperTrait::resetPasswordAction($data);
+            $result = self::applyResetPasswordAction($data);
             if($result){
                 return true;
             }

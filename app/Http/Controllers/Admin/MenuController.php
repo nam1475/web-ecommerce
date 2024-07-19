@@ -11,6 +11,8 @@ use App\Traits\HelperTrait;
 
 class MenuController extends Controller
 {
+    use HelperTrait;
+
     /* Tạo 1 biến trung gian và constructor(Khởi tạo 1 đối tượng) để thông qua đó có thể truy cập tới các 
     phương thức ở class khác */
     protected $menuService;
@@ -25,16 +27,16 @@ class MenuController extends Controller
         // dd($menus); 
         return view('admin.menu.list', [
             'title' => 'DS danh mục',
-            'menus' => HelperTrait::getAll($request, Menu::class),
-            'menuParents' => HelperTrait::getParents(Menu::class),
+            'menus' => self::getAll($request, Menu::class),
+            'menuParents' => self::getParents(Menu::class),
         ]);
     }
 
     public function add(){
         return view('admin.menu.add', [
             'title' => 'Thêm danh mục mới',
-            // 'menus' => HelperTrait::getParents(Menu::class),
-            'menus' => HelperTrait::getMenus()
+            // 'menus' => self::getParents(Menu::class),
+            'menus' => self::getMenus()
         ]);
     }
 
@@ -52,8 +54,8 @@ class MenuController extends Controller
         return view('admin.menu.edit', [
             'title' => 'Sửa danh mục',
             'menu' => $this->menuService->edit($id),
-            // 'parentMenus' => HelperTrait::getParents(Menu::class)
-            'menus' => HelperTrait::getMenus()
+            // 'parentMenus' => self::getParents(Menu::class)
+            'menus' => self::getMenus()
         ]);
     }
 

@@ -12,6 +12,8 @@ use App\Http\Requests\Shop\ForgotPasswordRequest;
 use App\Http\Requests\Shop\ResetPasswordRequest;
 
 class UserAuthService{
+    use HelperTrait;
+    
     public static function loginAction($request){
         $request->validated();
         try{
@@ -33,7 +35,7 @@ class UserAuthService{
     }
 
     public static function forgotPasswordAction($request){
-        HelperTrait::validateAuthPassword($request, 'users', ForgotPasswordRequest::class);
+        self::validateAuthPassword($request, 'users', ForgotPasswordRequest::class);
 
         try{
             $array = [
@@ -44,7 +46,7 @@ class UserAuthService{
                 'route' => 'admin.user.reset.password',
             ];
 
-            HelperTrait::forgotPasswordAction(UserResetPassword::class, $array);
+            self::applyForgotPasswordAction(UserResetPassword::class, $array);
 
         }catch(\Exception $e){
             DB::rollBack();
@@ -55,7 +57,7 @@ class UserAuthService{
     }
 
     public static function resetPasswordAction($request, $token){
-        HelperTrait::validateAuthPassword($request, 'users', ResetPasswordRequest::class);
+        self::validateAuthPassword($request, 'users', ResetPasswordRequest::class);
 
         try{
             $data = [
@@ -65,7 +67,7 @@ class UserAuthService{
                 'token' => $token,
                 'guardName' => 'web',
             ];
-            $result = HelperTrait::resetPasswordAction($data);
+            $result = self::applyResetPasswordAction($data);
             if($result){
                 return true;
             }

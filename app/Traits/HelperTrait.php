@@ -49,7 +49,7 @@ trait HelperTrait
         $forgotPwRequest->validate($forgotPwRequest->rules(), $forgotPwRequest->messages());
     }
 
-    public static function forgotPasswordAction($model, $array){
+    public static function applyForgotPasswordAction($model, $array){
         DB::beginTransaction();
         $token = Str::random(64);
         
@@ -73,7 +73,7 @@ trait HelperTrait
         Session::flash('success', 'Gửi email thành công!');
     }
 
-    public static function resetPasswordAction($data){
+    public static function applyResetPasswordAction($data){
         DB::beginTransaction();
         $isValidUser = $data['modelResetPw']::where([
             'email' => $data['request']->email,
@@ -171,7 +171,7 @@ trait HelperTrait
         return $result->paginate(10);  
     }
 
-    public static function filterQueryString($request, $route, $slug = ''){
+    public static function applyFilterEmptyQueryString($request, $route, $slug = ''){
         /* Lọc ra những query string ko rỗng */
         $filters = array_filter($request->query(), function ($value) {
             return !is_null($value) && $value != '';

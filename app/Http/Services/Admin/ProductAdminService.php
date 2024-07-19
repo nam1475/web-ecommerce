@@ -11,6 +11,8 @@ use App\Traits\HelperTrait;
 use Illuminate\Support\Facades\DB;
 
 class ProductAdminService{
+    use HelperTrait;
+
     public function getMenuProducts()
     {
         return Product::select('menu_id')->distinct()->get();
@@ -109,7 +111,7 @@ class ProductAdminService{
     public function delete($id){
         try {
             $product = Product::find($id);
-            HelperTrait::deleteFile($product);
+            self::deleteFile($product);
             $product->delete();
             Session::flash('success', 'Xóa Sản Phẩm Thành Công');
         } catch (\Exception $err) {

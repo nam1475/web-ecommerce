@@ -40,6 +40,7 @@
                 @endphp 
                 <div class="mb-1">
                     <div class="d-flex justify-content-between align-items-center my-3">
+                        {{-- Loại bỏ order id bị trùng --}}
                         @if(!in_array($i->order->id, $uniqueOrderID))
                             @php
                                 array_push($uniqueOrderID, $i->order->id);
@@ -59,6 +60,7 @@
                             <p><i class="fa-solid fa-cube"></i>Mã đơn hàng: #{{ $i->order->id }}</p>
                         @endif
 
+                        {{-- Loại bỏ order status bị trùng --}}
                         @if(!in_array($i->order->status, $uniqueOrderStatus))
                             @php
                                 array_push($uniqueOrderStatus, $i->order->status);

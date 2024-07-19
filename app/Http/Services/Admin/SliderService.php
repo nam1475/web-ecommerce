@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Traits\HelperTrait;
 
 class SliderService{
+    use HelperTrait;
+
     public function add($request)
     {
         $request->validated();
@@ -43,7 +45,7 @@ class SliderService{
         // $slider = Slider::where('id', $request->input('id'))->first();
         try{
             $slider = Slider::find($id);
-            HelperTrait::deleteFile($slider);
+            self::deleteFile($slider);
             $slider->delete();
             Session::flash('success', 'Xóa Slider Thành Công');
         }

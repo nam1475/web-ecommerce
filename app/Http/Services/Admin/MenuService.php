@@ -11,6 +11,8 @@ use App\Traits\HelperTrait;
 use Illuminate\Support\Collection;
 
 class MenuService{
+    use HelperTrait;
+
     public function create($request){
         try {
             $input = $request->all();
@@ -53,7 +55,7 @@ class MenuService{
     public function delete($id){
         try {
             $menu = Menu::where('id', '=', $id)->first();
-            HelperTrait::deleteFile($menu);
+            self::deleteFile($menu);
             $menu->delete();
             Session::flash('success', 'Xóa Danh Mục Thành Công');
             

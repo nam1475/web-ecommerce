@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\HelperTrait;
 
 class RoleService{
+    use HelperTrait;
+
     public static function getPmsParent(){
         // $pmsParents = Permission::where([
         //     ['parent_id', '=', ''],
         //     ['active', '=', 1]
         // ])->get();
-        $pmsParents = HelperTrait::getParents(Permission::class);
+        $pmsParents = self::getParents(Permission::class);
         return $pmsParents;
     }
 

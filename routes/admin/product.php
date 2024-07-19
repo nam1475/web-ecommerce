@@ -13,5 +13,5 @@ Route::controller(ProductController::class)->prefix('product')->group(function (
     Route::get('/edit/{id}', 'edit')->name('product.edit')->can('edit-product');
     Route::put('/update/{id}', 'update')->name('product.update');
     Route::delete('/delete/{id}', 'delete')->name('product.delete')->can('delete-product');
-    Route::get('list/filter', 'filterQueryString')->name('product.list.filter');
+    Route::get('list/filter-empty-query-string', 'filterEmptyQueryString')->name('product.list.filter');
 });

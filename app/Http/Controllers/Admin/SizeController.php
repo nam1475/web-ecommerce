@@ -10,12 +10,13 @@ use App\Traits\HelperTrait;
 
 class SizeController extends Controller
 {
+    use HelperTrait;
 
     public function list(Request $request)
     {
         return view('admin.size.list', [
             'title' => 'Danh Sách Sản Phẩm',
-            'sizes' => HelperTrait::getAll($request, Size::class),
+            'sizes' => self::getAll($request, Size::class),
         ]);
     }
 

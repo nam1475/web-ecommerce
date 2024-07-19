@@ -13,6 +13,8 @@ use App\Traits\HelperTrait;
 
 class RoleController extends Controller
 {
+    use HelperTrait;
+
     public function list(Request $request){
         // if(Gate::allows('admin')){
         //     return redirect()->route('dashboard');
@@ -21,7 +23,7 @@ class RoleController extends Controller
         //     abort(403, 'You are not allowed to access this page');
         // }
         return view('admin.role.list')->with([
-            'roles' => HelperTrait::getAll($request, Role::class),
+            'roles' => self::getAll($request, Role::class),
             'title' => 'Danh Sách Vai Trò'
         ]);
     }
